@@ -1,5 +1,6 @@
 # Database data
 /mysql-data/
+/mongodb-data/
 
 # Local backup files
 /backup/

@@ -2,7 +2,7 @@
 
 **GABLER** adalah singkatan dari **General App Backend Local Environment Runner**.
 
-GABLER adalah template environment lokal berbasis Docker untuk menjalankan project backend PHP dengan Nginx, MySQL, dan phpMyAdmin. Project web dapat dibuat sendiri di folder `www`.
+GABLER adalah template environment lokal berbasis Docker untuk menjalankan project backend PHP dengan Nginx, MySQL, MongoDB, phpMyAdmin, dan mongo-express. Project web dapat dibuat sendiri di folder `www`.
 
 ## Isi Stack
 
@@ -10,6 +10,8 @@ GABLER adalah template environment lokal berbasis Docker untuk menjalankan proje
 - PHP-FPM: menjalankan file PHP
 - MySQL: database di port `3306`
 - phpMyAdmin: database manager di `http://localhost:8081`
+- MongoDB: database dokumen di port `27017`
+- mongo-express: MongoDB web manager di `http://localhost:8082`
 
 ## Struktur Folder
 
@@ -18,6 +20,7 @@ c:\etc
 +-- docker-compose.yml
 +-- README.md
 +-- mysql-data\
++-- mongodb-data\
 +-- nginx\
 |   +-- default.conf
 +-- php\
@@ -31,8 +34,9 @@ Keterangan:
 - `www/index.php` adalah halaman utama.
 - `www` adalah tempat menyimpan project PHP.
 - `mysql-data` menyimpan data MySQL lokal.
+- `mongodb-data` menyimpan data MongoDB lokal.
 - `nginx/default.conf` adalah konfigurasi Nginx.
-- `php/Dockerfile` adalah image PHP custom dengan ekstensi MySQL.
+- `php/Dockerfile` adalah image PHP custom dengan ekstensi MySQL dan MongoDB.
 
 ## Install Docker
 
@@ -67,6 +71,7 @@ Setelah selesai, buka:
 
 - Halaman utama: `http://localhost:8080`
 - phpMyAdmin: `http://localhost:8081`
+- mongo-express: `http://localhost:8082`
 
 ## Menjalankan Stack
 
@@ -92,6 +97,7 @@ docker compose ps
 
 - Halaman utama: `http://localhost:8080`
 - phpMyAdmin: `http://localhost:8081`
+- mongo-express: `http://localhost:8082`
 
 ## Database MySQL
 
@@ -122,6 +128,30 @@ Atau:
 Username: appuser
 Password: apppass
 ```
+
+## Database MongoDB
+
+Credential MongoDB:
+
+```text
+Host dari container PHP: mongodb
+Host dari komputer lokal: localhost
+Port: 27017
+Database default: appdb
+Root user: root
+Root password: rootpass
+Connection string dari PHP: mongodb://root:rootpass@mongodb:27017/?authSource=admin
+```
+
+Login mongo-express:
+
+```text
+URL: http://localhost:8082
+Username: admin
+Password: adminpass
+```
+
+Halaman utama GABLER juga menampilkan daftar collection MongoDB di database `appdb` dan menyediakan form sederhana untuk membuat collection baru.
 
 ## Command Harian
 
@@ -158,6 +188,8 @@ docker compose restart nginx
 docker compose restart php
 docker compose restart mysql
 docker compose restart phpmyadmin
+docker compose restart mongodb
+docker compose restart mongo-express
 ```
 
 Masuk ke container PHP:
@@ -170,6 +202,12 @@ Masuk ke MySQL:
 
 ```powershell
 docker compose exec mysql mysql -uroot -prootpass
+```
+
+Masuk ke MongoDB:
+
+```powershell
+docker compose exec mongodb mongosh -u root -p rootpass --authenticationDatabase admin
 ```
 
 Mematikan container tanpa menghapus data:
