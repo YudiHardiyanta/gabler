@@ -237,7 +237,8 @@ Cara manual membuat Laravel baru di folder `www`:
 
 ```powershell
 cd c:\etc
-docker run --rm -v "C:\etc\www:/app" composer create-project laravel/laravel nama-project
+docker compose up -d --build php
+docker compose exec php sh -lc "cd /var/www/html && composer create-project laravel/laravel nama-project"
 ```
 
 Akses Laravel:
@@ -298,7 +299,8 @@ Cara manual:
 
 ```powershell
 cd c:\etc
-docker run --rm -v "C:\etc\www:/app" composer create-project yiisoft/yii2-app-basic yii-app
+docker compose up -d --build php
+docker compose exec php sh -lc "cd /var/www/html && composer create-project yiisoft/yii2-app-basic yii-app"
 ```
 
 Setelah itu edit `www\yii-app\config\db.php` agar memakai:
@@ -342,7 +344,8 @@ Cara manual:
 
 ```powershell
 cd c:\etc
-docker run --rm -v "C:\etc\www:/app" composer create-project codeigniter4/appstarter ci-app
+docker compose up -d --build php
+docker compose exec php sh -lc "cd /var/www/html && composer create-project codeigniter4/appstarter ci-app"
 ```
 
 Setelah itu copy `env` menjadi `.env`, lalu edit database:
@@ -387,10 +390,10 @@ cd c:\etc\www\toko-online
 Wrapper tersebut akan menjalankan Composer lewat container Docker:
 
 ```powershell
-docker run --rm -it -v "folder-saat-ini:/app" composer ...
+docker compose exec php sh -lc "cd /var/www/html/nama-project && composer ..."
 ```
 
-Jadi versi Composer dan PHP yang dipakai tidak bergantung pada Composer lokal di komputer.
+Jadi versi Composer dan PHP yang dipakai tidak bergantung pada Composer lokal di komputer, dan extension seperti `intl` mengikuti PHP GABLER.
 
 ## Troubleshooting
 

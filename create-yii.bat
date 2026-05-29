@@ -31,7 +31,7 @@ if errorlevel 1 goto error
 
 echo.
 echo Membuat project Yii2: %APP_NAME%
-docker run --rm -v "%CD%\www:/app" composer create-project yiisoft/yii2-app-basic "%APP_NAME%"
+docker compose exec -T php sh -lc "cd /var/www/html && composer create-project yiisoft/yii2-app-basic '%APP_NAME%'"
 if errorlevel 1 goto error
 
 echo.
