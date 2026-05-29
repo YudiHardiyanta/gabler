@@ -217,12 +217,41 @@ Warning: require(/var/www/html/laravel/public/../vendor/autoload.php): Failed to
 
 Artinya dependency Laravel belum di-install.
 
-Jalankan langkah berikut dari folder root project:
+Cara paling mudah di Windows adalah menjalankan script setup:
+
+```powershell
+cd c:\etc
+.\setup.ps1
+```
+
+Atau klik/jalankan:
+
+```powershell
+setup.bat
+```
+
+Script tersebut akan otomatis:
+
+- menjalankan `docker compose up -d --build`
+- install dependency Laravel dengan Composer container
+- membuat file `.env` jika belum ada
+- mengatur koneksi database Laravel ke MySQL Docker
+- menjalankan `php artisan key:generate`
+- menjalankan `php artisan migrate`
+- clear cache Laravel
+
+Setelah selesai, buka:
+
+```text
+http://localhost:8080/laravel/public/
+```
+
+Jika ingin menjalankan secara manual, gunakan langkah berikut dari folder root project:
 
 ```powershell
 cd c:\etc
 docker compose up -d --build
-docker run --rm -v ${PWD}\www\laravel:/app composer install
+docker run --rm -v "C:\etc\www\laravel:/app" composer install
 ```
 
 Buat file `.env` dari `.env.example`:
