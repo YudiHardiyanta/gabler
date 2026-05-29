@@ -1,0 +1,7 @@
+# Ignore user projects and generated files in www.
+*
+
+# Keep GABLER default entry files.
+!index.php
+!composer.bat
+!.gitignore
