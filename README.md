@@ -207,6 +207,62 @@ docker system prune
 
 Gunakan command di atas dengan hati-hati.
 
+## Fresh Install Laravel
+
+Folder `www/laravel/vendor` tidak ikut disimpan ke Git karena ukurannya besar. Jadi setelah clone repository atau menjalankan project di komputer baru, Laravel bisa menampilkan error seperti ini:
+
+```text
+Warning: require(/var/www/html/laravel/public/../vendor/autoload.php): Failed to open stream: No such file or directory
+```
+
+Artinya dependency Laravel belum di-install.
+
+Jalankan langkah berikut dari folder root project:
+
+```powershell
+cd c:\etc
+docker compose up -d --build
+docker run --rm -v ${PWD}\www\laravel:/app composer install
+```
+
+Buat file `.env` dari `.env.example`:
+
+```powershell
+Copy-Item .\www\laravel\.env.example .\www\laravel\.env
+```
+
+Edit `www\laravel\.env`, lalu sesuaikan database agar memakai MySQL Docker:
+
+```env
+APP_URL=http://localhost:8080/laravel/public
+
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=appdb
+DB_USERNAME=appuser
+DB_PASSWORD=apppass
+```
+
+Setelah itu generate application key dan jalankan migration:
+
+```powershell
+docker compose exec php sh -lc "cd /var/www/html/laravel && php artisan key:generate"
+docker compose exec php sh -lc "cd /var/www/html/laravel && php artisan migrate"
+```
+
+Jika Laravel masih error karena cache lama:
+
+```powershell
+docker compose exec php sh -lc "cd /var/www/html/laravel && php artisan optimize:clear"
+```
+
+Setelah selesai, buka:
+
+```text
+http://localhost:8080/laravel/public/
+```
+
 ## Command Laravel
 
 Masuk ke folder Laravel di container PHP:
