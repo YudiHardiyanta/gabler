@@ -264,8 +264,41 @@ Jalankan setup Laravel:
 ```powershell
 docker compose exec php sh -lc "cd /var/www/html/nama-project && php artisan key:generate"
 docker compose exec php sh -lc "cd /var/www/html/nama-project && php artisan migrate"
-docker compose exec php sh -lc "cd /var/www/html/nama-project && chmod -R 777 storage bootstrap/cache && php artisan optimize:clear"
+  docker compose exec php sh -lc "cd /var/www/html/nama-project && chmod -R 777 storage bootstrap/cache && php artisan optimize:clear"
+  ```
+
+## Menggunakan Composer
+
+GABLER menyediakan wrapper `composer.bat`, sehingga pengguna tidak perlu mengetik command Docker yang panjang.
+
+Jika ingin menjalankan Composer di dalam project, masuk ke folder project terlebih dahulu:
+
+```powershell
+cd c:\etc\www\nama-project
 ```
+
+Lalu jalankan Composer seperti biasa:
+
+```powershell
+..\composer.bat install
+..\composer.bat require vendor/package
+..\composer.bat update
+```
+
+Contoh install package Laravel:
+
+```powershell
+cd c:\etc\www\toko-online
+..\composer.bat require laravel/breeze
+```
+
+Wrapper tersebut akan menjalankan Composer lewat container Docker:
+
+```powershell
+docker run --rm -it -v "folder-saat-ini:/app" composer ...
+```
+
+Jadi versi Composer dan PHP yang dipakai tidak bergantung pada Composer lokal di komputer.
 
 ## Troubleshooting
 
