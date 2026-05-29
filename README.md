@@ -264,8 +264,100 @@ Jalankan setup Laravel:
 ```powershell
 docker compose exec php sh -lc "cd /var/www/html/nama-project && php artisan key:generate"
 docker compose exec php sh -lc "cd /var/www/html/nama-project && php artisan migrate"
-  docker compose exec php sh -lc "cd /var/www/html/nama-project && chmod -R 777 storage bootstrap/cache && php artisan optimize:clear"
-  ```
+docker compose exec php sh -lc "cd /var/www/html/nama-project && chmod -R 777 storage bootstrap/cache && php artisan optimize:clear"
+```
+
+## Menambah Project Yii2
+
+Cara paling mudah di Windows adalah menjalankan:
+
+```text
+create-yii.bat
+```
+
+Script akan meminta nama app Yii2, lalu otomatis:
+
+- menjalankan Docker service
+- membuat project Yii2 basic di `www\nama-app`
+- mengatur koneksi database ke MySQL Docker
+- mengatur permission `runtime` dan `web/assets`
+
+Contoh:
+
+```text
+Masukkan nama app Yii2: yii-app
+```
+
+Akses:
+
+```text
+http://localhost:8080/yii-app/web/
+```
+
+Cara manual:
+
+```powershell
+cd c:\etc
+docker run --rm -v "C:\etc\www:/app" composer create-project yiisoft/yii2-app-basic yii-app
+```
+
+Setelah itu edit `www\yii-app\config\db.php` agar memakai:
+
+```php
+'dsn' => 'mysql:host=mysql;dbname=appdb',
+'username' => 'appuser',
+'password' => 'apppass',
+```
+
+## Menambah Project CodeIgniter 4
+
+Cara paling mudah di Windows adalah menjalankan:
+
+```text
+create-ci.bat
+```
+
+Script akan meminta nama app CodeIgniter, lalu otomatis:
+
+- menjalankan Docker service
+- membuat project CodeIgniter 4 di `www\nama-app`
+- membuat file `.env`
+- mengatur koneksi database ke MySQL Docker
+- mengatur permission `writable`
+- menawarkan pilihan untuk menjalankan migration
+
+Contoh:
+
+```text
+Masukkan nama app CodeIgniter: ci-app
+```
+
+Akses:
+
+```text
+http://localhost:8080/ci-app/public/
+```
+
+Cara manual:
+
+```powershell
+cd c:\etc
+docker run --rm -v "C:\etc\www:/app" composer create-project codeigniter4/appstarter ci-app
+```
+
+Setelah itu copy `env` menjadi `.env`, lalu edit database:
+
+```env
+CI_ENVIRONMENT = development
+app.baseURL = 'http://localhost:8080/ci-app/public/'
+
+database.default.hostname = mysql
+database.default.database = appdb
+database.default.username = appuser
+database.default.password = apppass
+database.default.DBDriver = MySQLi
+database.default.port = 3306
+```
 
 ## Menggunakan Composer
 
