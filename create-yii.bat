@@ -2,9 +2,9 @@
 setlocal enabledelayedexpansion
 cd /d "%~dp0"
 
-echo GABLER Yii2 Project Creator
+echo GABLER Yii3 Project Creator
 echo.
-set /p APP_NAME=Masukkan nama app Yii2: 
+set /p APP_NAME=Masukkan nama app Yii3:
 
 if "%APP_NAME%"=="" (
     echo Nama app tidak boleh kosong.
@@ -30,23 +30,23 @@ docker compose up -d --build
 if errorlevel 1 goto error
 
 echo.
-echo Membuat project Yii2: %APP_NAME%
-docker compose exec -T php sh -lc "cd /var/www/html && composer create-project yiisoft/yii2-app-basic '%APP_NAME%'"
+echo Membuat project Yii3: %APP_NAME%
+docker compose exec -T php sh -lc "cd /var/www/html && composer create-project yiisoft/app '%APP_NAME%'"
 if errorlevel 1 goto error
 
 echo.
-echo Mengatur database Yii2...
-powershell -NoProfile -ExecutionPolicy Bypass -Command "$p='www\%APP_NAME%\config\db.php'; $c=@('<?php','','return [','    ''class'' => ''yii\db\Connection'',','    ''dsn'' => ''mysql:host=mysql;dbname=appdb'',','    ''username'' => ''appuser'',','    ''password'' => ''apppass'',','    ''charset'' => ''utf8'',','];'); Set-Content -Path $p -Value $c"
+echo Mengatur file .env Yii3...
+copy "www\%APP_NAME%\.env.example" "www\%APP_NAME%\.env" >nul
 if errorlevel 1 goto error
 
 echo.
 echo Mengatur permission runtime dan assets...
-docker compose exec -T php sh -lc "cd /var/www/html/%APP_NAME% && chmod -R 777 runtime web/assets"
+docker compose exec -T php sh -lc "cd /var/www/html/%APP_NAME% && chmod -R 777 runtime public/assets"
 if errorlevel 1 goto error
 
 echo.
-echo Yii2 app berhasil dibuat.
-echo URL: http://localhost:8080/%APP_NAME%/web/
+echo Yii3 app berhasil dibuat.
+echo URL: http://localhost:8080/%APP_NAME%/public/
 echo Folder: www\%APP_NAME%
 echo.
 pause

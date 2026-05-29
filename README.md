@@ -268,7 +268,7 @@ docker compose exec php sh -lc "cd /var/www/html/nama-project && php artisan mig
 docker compose exec php sh -lc "cd /var/www/html/nama-project && chmod -R 777 storage bootstrap/cache && php artisan optimize:clear"
 ```
 
-## Menambah Project Yii2
+## Menambah Project Yii3
 
 Cara paling mudah di Windows adalah menjalankan:
 
@@ -276,23 +276,23 @@ Cara paling mudah di Windows adalah menjalankan:
 create-yii.bat
 ```
 
-Script akan meminta nama app Yii2, lalu otomatis:
+Script akan meminta nama app Yii3, lalu otomatis:
 
 - menjalankan Docker service
-- membuat project Yii2 basic di `www\nama-app`
-- mengatur koneksi database ke MySQL Docker
-- mengatur permission `runtime` dan `web/assets`
+- membuat project Yii3 web template di `www\nama-app`
+- membuat file `.env`
+- mengatur permission `runtime` dan `public/assets`
 
 Contoh:
 
 ```text
-Masukkan nama app Yii2: yii-app
+Masukkan nama app Yii3: yii-app
 ```
 
 Akses:
 
 ```text
-http://localhost:8080/yii-app/web/
+http://localhost:8080/yii-app/public/
 ```
 
 Cara manual:
@@ -300,16 +300,14 @@ Cara manual:
 ```powershell
 cd c:\etc
 docker compose up -d --build php
-docker compose exec php sh -lc "cd /var/www/html && composer create-project yiisoft/yii2-app-basic yii-app"
+docker compose exec php sh -lc "cd /var/www/html && composer create-project yiisoft/app yii-app"
+copy www\yii-app\.env.example www\yii-app\.env
+docker compose exec php sh -lc "cd /var/www/html/yii-app && chmod -R 777 runtime public/assets"
 ```
 
-Setelah itu edit `www\yii-app\config\db.php` agar memakai:
+Catatan database Yii3:
 
-```php
-'dsn' => 'mysql:host=mysql;dbname=appdb',
-'username' => 'appuser',
-'password' => 'apppass',
-```
+Yii3 tidak lagi memakai file `config\db.php` seperti Yii2. Jika project Yii3 membutuhkan database, tambahkan paket database yang sesuai di dalam project, misalnya `yiisoft/db-mysql`, lalu ikuti struktur konfigurasi Yii3 di `config/common`.
 
 ## Menambah Project CodeIgniter 4
 
