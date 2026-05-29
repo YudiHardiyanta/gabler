@@ -281,6 +281,7 @@ Script akan meminta nama app Yii3, lalu otomatis:
 - menjalankan Docker service
 - membuat project Yii3 web template di `www\nama-app`
 - membuat file `.env`
+- mengatur base URL subfolder Yii3 agar tidak redirect ke root `localhost:8080/`
 - mengatur permission `runtime` dan `public/assets`
 
 Contoh:
@@ -304,6 +305,8 @@ docker compose exec php sh -lc "cd /var/www/html && composer create-project yiis
 copy www\yii-app\.env.example www\yii-app\.env
 docker compose exec php sh -lc "cd /var/www/html/yii-app && chmod -R 777 runtime public/assets"
 ```
+
+Jika membuat Yii3 secara manual dan akses `/yii-app/public/` kembali ke `/`, set prefix Yii3 ke `/yii-app/public` di konfigurasi aplikasi. Script `create-yii.bat` sudah melakukan ini otomatis.
 
 Catatan database Yii3:
 

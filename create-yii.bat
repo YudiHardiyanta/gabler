@@ -4,7 +4,7 @@ cd /d "%~dp0"
 
 echo GABLER Yii3 Project Creator
 echo.
-set /p APP_NAME=Masukkan nama app Yii3:
+set /p "APP_NAME=Masukkan nama app Yii3: "
 
 if "%APP_NAME%"=="" (
     echo Nama app tidak boleh kosong.
@@ -37,6 +37,11 @@ if errorlevel 1 goto error
 echo.
 echo Mengatur file .env Yii3...
 copy "www\%APP_NAME%\.env.example" "www\%APP_NAME%\.env" >nul
+if errorlevel 1 goto error
+
+echo.
+echo Mengatur base URL subfolder Yii3...
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$app='%APP_NAME%'; $prefix='/' + $app + '/public'; $params='www\' + $app + '\config\common\params.php'; $c=Get-Content $params -Raw; $c=$c -replace '''@baseUrl''\s*=>\s*''/''', '''@baseUrl'' => ''' + $prefix + ''''; $c=$c -replace '''@assetsUrl''\s*=>\s*''/assets''', '''@assetsUrl'' => ''' + $prefix + '/assets'''; $c=$c -replace '''app''\s*=>\s*\[', '''app'' => [' + [Environment]::NewLine + '        ''prefix'' => ''' + $prefix + ''','; Set-Content -Path $params -Value $c -Encoding UTF8; $subfolder='www\' + $app + '\config\common\subfolder.php'; $s=@('<?php','','declare(strict_types=1);','','use Yiisoft\Aliases\Aliases;','use Yiisoft\Router\UrlGeneratorInterface;','use Yiisoft\Yii\Middleware\SubFolder;','','return [','    SubFolder::class => static function (','        Aliases $aliases,','        UrlGeneratorInterface $urlGenerator,','    ) use ($params) {','        $aliases->set(''@baseUrl'', $params[''app''][''prefix'']);','        $aliases->set(''@assetsUrl'', $params[''app''][''prefix''] . ''/assets'');','','        return new SubFolder(','            $urlGenerator,','            $aliases,','            $params[''app''][''prefix''] === ''/'' ? null : $params[''app''][''prefix''],','        );','    },','];'); Set-Content -Path $subfolder -Value $s -Encoding UTF8"
 if errorlevel 1 goto error
 
 echo.
