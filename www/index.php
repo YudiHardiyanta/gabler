@@ -43,8 +43,7 @@ try {
 
     <div class="actions">
         <a class="button" href="http://localhost:8081">Buka phpMyAdmin</a>
-        <a class="button" href="/create-laravel.php">Create Laravel</a>
     </div>
-    <p class="note">Create Laravel berjalan dari container PHP GABLER dan membuat project baru di folder <code>www</code>.</p>
+    <p class="note">Untuk membuat Laravel, jalankan <code>create-laravel.bat</code> dari Windows agar proses Composer tidak timeout di web server.</p>
 </body>
 </html>
