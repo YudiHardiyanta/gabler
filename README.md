@@ -4,25 +4,6 @@
 
 GABLER adalah template environment lokal berbasis Docker untuk menjalankan project backend PHP dengan Nginx, MySQL, dan phpMyAdmin. Project web dapat dibuat sendiri di folder `www`.
 
-## Cara Paling Mudah
-
-Di Windows, jalankan file:
-
-```text
-start-gabler.bat
-```
-
-File ini akan menjalankan:
-
-```powershell
-docker compose up -d --build
-```
-
-Setelah selesai, buka:
-
-- Halaman utama: `http://localhost:8080`
-- phpMyAdmin: `http://localhost:8081`
-
 ## Isi Stack
 
 - Nginx: web server di `http://localhost:8080`
@@ -67,6 +48,25 @@ Keterangan:
 docker --version
 docker compose version
 ```
+
+## Cara Paling Mudah
+
+Setelah Docker terinstall dan berjalan, di Windows jalankan file:
+
+```text
+start-gabler.bat
+```
+
+File ini akan menjalankan:
+
+```powershell
+docker compose up -d --build
+```
+
+Setelah selesai, buka:
+
+- Halaman utama: `http://localhost:8080`
+- phpMyAdmin: `http://localhost:8081`
 
 ## Menjalankan Stack
 
