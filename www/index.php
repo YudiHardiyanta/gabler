@@ -43,8 +43,8 @@ try {
 
     <div class="actions">
         <a class="button" href="http://localhost:8081">Buka phpMyAdmin</a>
-        <a class="button" href="/create-laravel.bat">Create Laravel</a>
+        <a class="button" href="/create-laravel.php">Create Laravel</a>
     </div>
-    <p class="note">Tombol Create Laravel membuka file BAT. Jika browser hanya menampilkan atau mengunduh file, jalankan <code>www\create-laravel.bat</code> dari Windows Explorer.</p>
+    <p class="note">Create Laravel berjalan dari container PHP GABLER dan membuat project baru di folder <code>www</code>.</p>
 </body>
 </html>
