@@ -300,6 +300,29 @@ Jika MySQL belum siap:
 docker compose logs mysql
 ```
 
+Jika phpMyAdmin menampilkan error koneksi seperti:
+
+```text
+phpMyAdmin tried to connect to the MySQL server, and the server rejected the connection.
+```
+
+Cek status MySQL:
+
+```powershell
+docker compose ps
+docker compose logs mysql
+```
+
+Pastikan MySQL berstatus `healthy`. Jika folder `mysql-data` sudah pernah dibuat dengan password lama, environment di `docker-compose.yml` tidak akan mengubah password database yang sudah ada. Untuk reset database lokal dari awal, matikan stack lalu hapus folder `mysql-data`:
+
+```powershell
+docker compose down
+Remove-Item -Recurse -Force .\mysql-data
+docker compose up -d --build
+```
+
+Perhatian: menghapus `mysql-data` akan menghapus semua database lokal.
+
 Jika port bentrok, ubah port di `docker-compose.yml`, misalnya:
 
 ```yaml
