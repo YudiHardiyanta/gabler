@@ -30,6 +30,7 @@ try {
             text-decoration: none;
         }
         .button:hover { opacity: .9; }
+        .note { color: #555; font-size: 14px; margin-top: 12px; }
     </style>
 </head>
 <body>
@@ -42,6 +43,8 @@ try {
 
     <div class="actions">
         <a class="button" href="http://localhost:8081">Buka phpMyAdmin</a>
+        <a class="button" href="/create-laravel.bat">Create Laravel</a>
     </div>
+    <p class="note">Tombol Create Laravel membuka file BAT. Jika browser hanya menampilkan atau mengunduh file, jalankan <code>www\create-laravel.bat</code> dari Windows Explorer.</p>
 </body>
 </html>
