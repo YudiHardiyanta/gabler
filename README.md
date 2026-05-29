@@ -205,7 +205,35 @@ echo 'Project PHP berjalan';
 
 Laravel tidak disertakan sebagai project bawaan agar repository tetap ringan dan pengguna bebas membuat project sendiri.
 
-Contoh membuat Laravel baru di folder `www`:
+Cara paling mudah di Windows adalah menjalankan:
+
+```text
+create-laravel.bat
+```
+
+Script akan meminta nama app Laravel, lalu otomatis:
+
+- menjalankan Docker service
+- membuat project Laravel di `www\nama-app`
+- membuat file `.env`
+- mengatur koneksi database ke MySQL Docker
+- menjalankan `php artisan key:generate`
+- mengatur permission `storage` dan `bootstrap/cache`
+- menawarkan pilihan untuk menjalankan migration
+
+Contoh:
+
+```text
+Masukkan nama app Laravel: toko-online
+```
+
+Akses:
+
+```text
+http://localhost:8080/toko-online/public/
+```
+
+Cara manual membuat Laravel baru di folder `www`:
 
 ```powershell
 cd c:\etc
