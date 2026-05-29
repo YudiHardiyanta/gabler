@@ -36,7 +36,7 @@ if errorlevel 1 goto error
 
 echo.
 echo Mengatur database Yii2...
-powershell -NoProfile -ExecutionPolicy Bypass -Command "$p='www\%APP_NAME%\config\db.php'; $c=@('<?php','','return [','    ''class'' => ''yii\db\Connection'',','    ''dsn'' => ''mysql:host=mysql;dbname=appdb'',','    ''username'' => ''appuser'',','    ''password'' => ''apppass'',','    ''charset'' => ''utf8'',','];'); Set-Content -Path $p -Value $c -Encoding UTF8"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$p='www\%APP_NAME%\config\db.php'; $c=@('<?php','','return [','    ''class'' => ''yii\db\Connection'',','    ''dsn'' => ''mysql:host=mysql;dbname=appdb'',','    ''username'' => ''appuser'',','    ''password'' => ''apppass'',','    ''charset'' => ''utf8'',','];'); [System.IO.File]::WriteAllLines($p, $c, [System.Text.UTF8Encoding]::new($false))"
 if errorlevel 1 goto error
 
 echo.
