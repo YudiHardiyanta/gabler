@@ -4,6 +4,9 @@
 # Local backup files
 /backup/
 
+# Local user test projects
+/www/test/
+
 # OS and editor files
 .DS_Store
 Thumbs.db
