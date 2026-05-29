@@ -3,6 +3,8 @@ $host = 'mysql';
 $db = 'appdb';
 $user = 'appuser';
 $pass = 'apppass';
+$appVersion = '1.0.0';
+$year = date('Y');
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass);
@@ -30,7 +32,7 @@ try {
             text-decoration: none;
         }
         .button:hover { opacity: .9; }
-        .note { color: #555; font-size: 14px; margin-top: 12px; }
+        footer { color: #555; font-size: 14px; margin-top: 36px; }
     </style>
 </head>
 <body>
@@ -44,6 +46,9 @@ try {
     <div class="actions">
         <a class="button" href="http://localhost:8081">Buka phpMyAdmin</a>
     </div>
-    <p class="note">Untuk membuat Laravel, jalankan <code>create-laravel.bat</code> dari Windows agar proses Composer tidak timeout di web server.</p>
+    <footer>
+        <p>GABLER version <?= htmlspecialchars($appVersion, ENT_QUOTES, 'UTF-8') ?></p>
+        <p>Copyright &copy; <?= htmlspecialchars($year, ENT_QUOTES, 'UTF-8') ?> I Komang Yudi Hardiyanta</p>
+    </footer>
 </body>
 </html>
