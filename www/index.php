@@ -29,7 +29,6 @@ try {
             padding: 10px 14px;
             text-decoration: none;
         }
-        .button.secondary { background: #2563eb; }
         .button:hover { opacity: .9; }
     </style>
 </head>
@@ -41,7 +40,6 @@ try {
 
     <div class="actions">
         <a class="button" href="http://localhost:8081">Buka phpMyAdmin</a>
-        <a class="button secondary" href="/laravel/public/">Buka Laravel</a>
     </div>
 </body>
 </html>

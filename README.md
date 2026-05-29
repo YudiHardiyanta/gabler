@@ -1,20 +1,15 @@
 # GABLER
 
-**GABLER** adalah singkatan dari **General App Backend Laravel Environment Runner**.
+**GABLER** adalah singkatan dari **General App Backend Local Environment Runner**.
 
-GABLER adalah tools lokal berbasis Docker untuk menjalankan environment PHP, Nginx, MySQL, phpMyAdmin, dan Laravel secara praktis.
-
-# PHP, Nginx, MySQL, phpMyAdmin, and Laravel Docker Stack
-
-Stack ini dibuat seperti lingkungan XAMPP, tetapi menggunakan Docker Compose.
+GABLER adalah template environment lokal berbasis Docker untuk menjalankan project backend PHP dengan Nginx, MySQL, dan phpMyAdmin. Project web dapat dibuat sendiri di folder `www`.
 
 ## Isi Stack
 
 - Nginx: web server di `http://localhost:8080`
-- PHP-FPM: menjalankan file PHP dan Laravel
+- PHP-FPM: menjalankan file PHP
 - MySQL: database di port `3306`
 - phpMyAdmin: database manager di `http://localhost:8081`
-- Laravel: contoh project di `www/laravel`
 
 ## Struktur Folder
 
@@ -29,14 +24,13 @@ c:\etc
 |   +-- Dockerfile
 +-- www\
     +-- index.php
-    +-- laravel\
 ```
 
 Keterangan:
 
 - `www/index.php` adalah halaman utama.
-- `www/laravel` adalah project Laravel.
-- `mysql-data` menyimpan data MySQL agar tidak hilang saat container dimatikan.
+- `www` adalah tempat menyimpan project PHP.
+- `mysql-data` menyimpan data MySQL lokal.
 - `nginx/default.conf` adalah konfigurasi Nginx.
 - `php/Dockerfile` adalah image PHP custom dengan ekstensi MySQL.
 
@@ -45,21 +39,19 @@ Keterangan:
 1. Download Docker Desktop:
    `https://www.docker.com/products/docker-desktop/`
 2. Install Docker Desktop.
-3. Aktifkan WSL 2 jika diminta oleh installer Docker Desktop.
+3. Aktifkan WSL 2 jika diminta.
 4. Restart komputer jika diminta.
-5. Buka Docker Desktop dan tunggu sampai statusnya running.
-6. Cek instalasi lewat PowerShell:
+5. Buka Docker Desktop dan tunggu sampai running.
+6. Cek instalasi:
 
 ```powershell
 docker --version
 docker compose version
 ```
 
-Jika dua command di atas menampilkan versi Docker, berarti Docker siap dipakai.
-
 ## Menjalankan Stack
 
-Buka PowerShell, lalu masuk ke folder project:
+Masuk ke folder project:
 
 ```powershell
 cd c:\etc
@@ -71,7 +63,7 @@ Jalankan semua service:
 docker compose up -d --build
 ```
 
-Tunggu sampai semua container aktif, lalu cek:
+Cek status container:
 
 ```powershell
 docker compose ps
@@ -80,7 +72,6 @@ docker compose ps
 ## URL Akses
 
 - Halaman utama: `http://localhost:8080`
-- Laravel: `http://localhost:8080/laravel/public/`
 - phpMyAdmin: `http://localhost:8081`
 
 ## Database MySQL
@@ -106,14 +97,14 @@ Username: root
 Password: rootpass
 ```
 
-Atau gunakan:
+Atau:
 
 ```text
 Username: appuser
 Password: apppass
 ```
 
-## Command Docker Compose Harian
+## Command Harian
 
 Menyalakan service:
 
@@ -133,36 +124,17 @@ Melihat status container:
 docker compose ps
 ```
 
-Melihat log semua service:
+Melihat log:
 
 ```powershell
 docker compose logs
-```
-
-Melihat log service tertentu:
-
-```powershell
-docker compose logs nginx
-docker compose logs php
-docker compose logs mysql
-docker compose logs phpmyadmin
-```
-
-Melihat log real-time:
-
-```powershell
 docker compose logs -f
 ```
 
-Restart semua service:
+Restart service:
 
 ```powershell
 docker compose restart
-```
-
-Restart service tertentu:
-
-```powershell
 docker compose restart nginx
 docker compose restart php
 docker compose restart mysql
@@ -175,13 +147,7 @@ Masuk ke container PHP:
 docker compose exec php sh
 ```
 
-Menjalankan command PHP di container:
-
-```powershell
-docker compose exec php php -v
-```
-
-Masuk ke MySQL dari container:
+Masuk ke MySQL:
 
 ```powershell
 docker compose exec mysql mysql -uroot -prootpass
@@ -193,141 +159,11 @@ Mematikan container tanpa menghapus data:
 docker compose down
 ```
 
-Menghapus container dan network, tetapi data MySQL tetap aman karena ada di folder `mysql-data`:
+## Menambah Project PHP
 
-```powershell
-docker compose down
-```
+Buat folder atau file baru di `www`.
 
-Menghapus container, network, dan image yang tidak dipakai:
-
-```powershell
-docker system prune
-```
-
-Gunakan command di atas dengan hati-hati.
-
-## Fresh Install Laravel
-
-Folder `www/laravel/vendor` tidak ikut disimpan ke Git karena ukurannya besar. Jadi setelah clone repository atau menjalankan project di komputer baru, Laravel bisa menampilkan error seperti ini:
-
-```text
-Warning: require(/var/www/html/laravel/public/../vendor/autoload.php): Failed to open stream: No such file or directory
-```
-
-Artinya dependency Laravel belum di-install.
-
-Cara paling mudah di Windows adalah menjalankan script setup:
-
-```powershell
-cd c:\etc
-.\setup.ps1
-```
-
-Atau klik/jalankan:
-
-```powershell
-setup.bat
-```
-
-Script tersebut akan otomatis:
-
-- menjalankan `docker compose up -d --build`
-- install dependency Laravel dengan Composer container
-- membuat file `.env` jika belum ada
-- mengatur koneksi database Laravel ke MySQL Docker
-- menjalankan `php artisan key:generate`
-- menjalankan `php artisan migrate`
-- clear cache Laravel
-
-Setelah selesai, buka:
-
-```text
-http://localhost:8080/laravel/public/
-```
-
-Jika ingin menjalankan secara manual, gunakan langkah berikut dari folder root project:
-
-```powershell
-cd c:\etc
-docker compose up -d --build
-docker run --rm -v "C:\etc\www\laravel:/app" composer install
-```
-
-Buat file `.env` dari `.env.example`:
-
-```powershell
-Copy-Item .\www\laravel\.env.example .\www\laravel\.env
-```
-
-Edit `www\laravel\.env`, lalu sesuaikan database agar memakai MySQL Docker:
-
-```env
-APP_URL=http://localhost:8080/laravel/public
-
-DB_CONNECTION=mysql
-DB_HOST=mysql
-DB_PORT=3306
-DB_DATABASE=appdb
-DB_USERNAME=appuser
-DB_PASSWORD=apppass
-```
-
-Setelah itu generate application key dan jalankan migration:
-
-```powershell
-docker compose exec php sh -lc "cd /var/www/html/laravel && php artisan key:generate"
-docker compose exec php sh -lc "cd /var/www/html/laravel && php artisan migrate"
-```
-
-Jika Laravel masih error karena cache lama:
-
-```powershell
-docker compose exec php sh -lc "cd /var/www/html/laravel && php artisan optimize:clear"
-```
-
-Setelah selesai, buka:
-
-```text
-http://localhost:8080/laravel/public/
-```
-
-## Command Laravel
-
-Masuk ke folder Laravel di container PHP:
-
-```powershell
-docker compose exec php sh
-cd /var/www/html/laravel
-```
-
-Atau jalankan langsung dari PowerShell:
-
-```powershell
-docker compose exec php sh -lc "cd /var/www/html/laravel && php artisan about"
-```
-
-Menjalankan migration:
-
-```powershell
-docker compose exec php sh -lc "cd /var/www/html/laravel && php artisan migrate"
-```
-
-Clear cache Laravel:
-
-```powershell
-docker compose exec php sh -lc "cd /var/www/html/laravel && php artisan optimize:clear"
-```
-
-Optimize Laravel:
-
-```powershell
-docker compose exec php sh -lc "cd /var/www/html/laravel && php artisan optimize"
-```
-
-## Menambah Project Web Lain
-
-Untuk project PHP biasa, buat folder baru di `www`, misalnya:
+Contoh project PHP biasa:
 
 ```text
 www\project-baru\index.php
@@ -339,29 +175,50 @@ Akses:
 http://localhost:8080/project-baru/
 ```
 
-Untuk project Laravel lain, letakkan seperti ini:
+Contoh isi `www\project-baru\index.php`:
 
-```text
-www\nama-laravel\
+```php
+<?php
+echo 'Project PHP berjalan';
 ```
 
-Akses folder public:
+## Menambah Project Laravel Sendiri
 
-```text
-http://localhost:8080/nama-laravel/public/
-```
+Laravel tidak disertakan sebagai project bawaan agar repository tetap ringan dan pengguna bebas membuat project sendiri.
 
-## Catatan Performa Laravel di Windows
-
-Laravel bisa terasa lambat jika project berada di filesystem Windows seperti `C:\...` dan dijalankan melalui Docker Desktop. Ini karena Laravel membaca banyak file kecil dari folder `vendor`.
-
-Solusi yang bisa membantu:
+Contoh membuat Laravel baru di folder `www`:
 
 ```powershell
-docker compose exec php sh -lc "cd /var/www/html/laravel && php artisan optimize"
+cd c:\etc
+docker run --rm -v "C:\etc\www:/app" composer create-project laravel/laravel nama-project
 ```
 
-Jika ingin lebih cepat untuk development, simpan project di filesystem WSL, bukan di drive `C:\`.
+Akses Laravel:
+
+```text
+http://localhost:8080/nama-project/public/
+```
+
+Edit file `.env` Laravel agar memakai MySQL Docker:
+
+```env
+APP_URL=http://localhost:8080/nama-project/public
+
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=appdb
+DB_USERNAME=appuser
+DB_PASSWORD=apppass
+```
+
+Jalankan setup Laravel:
+
+```powershell
+docker compose exec php sh -lc "cd /var/www/html/nama-project && php artisan key:generate"
+docker compose exec php sh -lc "cd /var/www/html/nama-project && php artisan migrate"
+docker compose exec php sh -lc "cd /var/www/html/nama-project && chmod -R 777 storage bootstrap/cache && php artisan optimize:clear"
+```
 
 ## Troubleshooting
 
@@ -373,19 +230,7 @@ docker compose logs nginx
 docker compose logs php
 ```
 
-Jika Laravel error setelah memindahkan file:
-
-```powershell
-docker compose exec php sh -lc "cd /var/www/html/laravel && chmod -R 777 storage bootstrap/cache && php artisan optimize:clear"
-```
-
-Jika MySQL belum siap:
-
-```powershell
-docker compose logs mysql
-```
-
-Jika phpMyAdmin menampilkan error koneksi seperti:
+Jika phpMyAdmin menampilkan error koneksi:
 
 ```text
 phpMyAdmin tried to connect to the MySQL server, and the server rejected the connection.
@@ -398,7 +243,9 @@ docker compose ps
 docker compose logs mysql
 ```
 
-Pastikan MySQL berstatus `healthy`. Jika folder `mysql-data` sudah pernah dibuat dengan password lama, environment di `docker-compose.yml` tidak akan mengubah password database yang sudah ada. Untuk reset database lokal dari awal, matikan stack lalu hapus folder `mysql-data`:
+Pastikan MySQL berstatus `healthy`.
+
+Jika folder `mysql-data` sudah pernah dibuat dengan password lama, environment di `docker-compose.yml` tidak akan mengubah password database yang sudah ada. Untuk reset database lokal dari awal:
 
 ```powershell
 docker compose down
