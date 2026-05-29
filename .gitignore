@@ -1,0 +1,42 @@
+# Database data
+/mysql-data/
+
+# Local backup files
+/backup/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Dependency folders for nested projects
+**/vendor/
+**/node_modules/
+
+# Laravel runtime files
+**/storage/logs/*
+!**/storage/logs/.gitignore
+**/storage/framework/cache/*
+!**/storage/framework/cache/.gitignore
+**/storage/framework/sessions/*
+!**/storage/framework/sessions/.gitignore
+**/storage/framework/views/*
+!**/storage/framework/views/.gitignore
+
+# Database dumps
+*.sql
+*.sql.gz
+*.dump
+*.sqlite
+*.sqlite3
