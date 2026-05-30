@@ -6,11 +6,11 @@ for %%I in ("%ROOT_DIR%") do set "ROOT_DIR=%%~fI\"
 for %%I in ("%ROOT_DIR%www") do set "WWW_DIR=%%~fI"
 set "CURRENT_DIR=%CD%"
 for %%I in ("%CURRENT_DIR%") do set "CURRENT_DIR=%%~fI"
+set "PROJECT_DIR=%CURRENT_DIR:*www\=%"
 
 if /I "%CURRENT_DIR%"=="%WWW_DIR%" (
     set "CONTAINER_DIR=/var/www/html"
 ) else (
-    set "PROJECT_DIR=%CURRENT_DIR:*www\=%"
     if /I "%PROJECT_DIR%"=="%CURRENT_DIR%" (
         echo Jalankan scripts\php.bat dari folder www atau folder project di dalam www.
         echo Contoh: cd c:\etc\www
