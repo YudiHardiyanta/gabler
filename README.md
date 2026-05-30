@@ -26,6 +26,8 @@ c:\etc
 |   +-- start-gabler.sh
 |   +-- stop-gabler.bat
 |   +-- stop-gabler.sh
+|   +-- php.bat
+|   +-- php.sh
 |   +-- composer.bat
 |   +-- composer.sh
 |   +-- create-laravel.bat
@@ -53,6 +55,7 @@ c:\etc
 |   +-- Dockerfile
 +-- www\
     +-- composer.bat
+    +-- php.bat
     +-- index.php
 ```
 
@@ -958,6 +961,43 @@ docker compose exec php sh -lc "cd /var/www/html/nama-project && composer ..."
 ```
 
 Jadi versi Composer dan PHP yang dipakai tidak bergantung pada Composer lokal di komputer, dan extension seperti `intl` mengikuti PHP GABLER.
+
+## Menjalankan PHP CLI
+
+Jika command `php` tidak bisa dijalankan langsung dari folder `www`, gunakan wrapper PHP yang menjalankan PHP lewat container Docker.
+
+Masuk ke folder `www` atau folder project:
+
+```powershell
+cd c:\etc\www
+cd c:\etc\www\nama-project
+```
+
+Windows:
+
+```powershell
+..\scripts\php.bat -v
+..\..\scripts\php.bat artisan --version
+..\..\scripts\php.bat spark --version
+..\..\scripts\php.bat script.php
+```
+
+Linux/macOS:
+
+```bash
+../scripts/php.sh -v
+../../scripts/php.sh artisan --version
+../../scripts/php.sh spark --version
+../../scripts/php.sh script.php
+```
+
+Wrapper tersebut akan menjalankan:
+
+```powershell
+docker compose exec php sh -lc "cd /var/www/html/nama-project && php ..."
+```
+
+Jadi PHP CLI tetap memakai PHP dari container GABLER, bukan PHP lokal komputer.
 
 ## Troubleshooting
 

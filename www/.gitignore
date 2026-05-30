@@ -4,4 +4,5 @@
 # Keep GABLER default entry files.
 !index.php
 !composer.bat
+!php.bat
 !.gitignore
