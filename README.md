@@ -24,6 +24,8 @@ c:\etc
 +-- scripts\
 |   +-- start-gabler.bat
 |   +-- start-gabler.sh
+|   +-- stop-gabler.bat
+|   +-- stop-gabler.sh
 |   +-- composer.bat
 |   +-- composer.sh
 |   +-- create-laravel.bat
@@ -98,6 +100,20 @@ Setelah selesai, buka:
 - phpMyAdmin: `http://localhost:8081`
 - mongo-express: `http://localhost:8082`
 - Redis Commander: `http://localhost:8083`
+
+Untuk menghentikan semua service tanpa menghapus data:
+
+Windows:
+
+```text
+scripts\stop-gabler.bat
+```
+
+Linux/macOS:
+
+```bash
+./scripts/stop-gabler.sh
+```
 
 ## Menjalankan Stack
 
