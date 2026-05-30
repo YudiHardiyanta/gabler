@@ -65,18 +65,23 @@ echo "Membuat project Express: $APP_NAME"
 npx express-generator@latest "www/$APP_NAME" --no-view
 
 echo
-echo "Install dependency..."
+echo "Install dependency dan membuat package-lock.json..."
 cd "www/$APP_NAME"
-npm install
+npm install --package-lock
 
 echo
 echo "Mengatur port default ke $APP_PORT..."
 node -e "const fs=require('fs'); const p='bin/www'; let c=fs.readFileSync(p,'utf8'); c=c.replace(/process\\.env\\.PORT \\|\\| '3000'/, \"process.env.PORT || '$APP_PORT'\"); fs.writeFileSync(p,c);"
 
+echo "Menambahkan informasi port di app.js..."
+node -e "const fs=require('fs'); const p='app.js'; let c=fs.readFileSync(p,'utf8'); c=c.replace('var app = express();', \"var app = express();\\n\\nvar defaultPort = process.env.PORT || '$APP_PORT';\\napp.set('port', defaultPort);\\nconsole.log('Express app default port: ' + defaultPort);\"); fs.writeFileSync(p,c);"
+
 echo
 echo "Express app berhasil dibuat."
 echo "Folder: www/$APP_NAME"
 echo "Port: $APP_PORT"
+echo "File dibuat: package-lock.json"
+echo "Folder dibuat: node_modules"
 echo "Jalankan:"
 echo "  cd www/$APP_NAME"
 echo "  npm start"

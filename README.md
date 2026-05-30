@@ -538,6 +538,14 @@ Script akan meminta:
 - nama app Express
 - port yang akan dipakai, default `3000`
 
+Script juga akan:
+
+- menjalankan `npm install --package-lock`
+- membuat `package-lock.json`
+- membuat folder `node_modules`
+- mengatur default port di `bin/www`
+- menambahkan log port di `app.js`
+
 Contoh:
 
 ```text
