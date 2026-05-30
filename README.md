@@ -36,6 +36,10 @@ c:\etc
 |   +-- create-ci.sh
 |   +-- create-express.bat
 |   +-- create-express.sh
+|   +-- create-next.bat
+|   +-- create-next.sh
+|   +-- create-nuxt.bat
+|   +-- create-nuxt.sh
 +-- mysql-data\
 +-- mongodb-data\
 +-- redis-data\
@@ -577,6 +581,143 @@ Akses:
 
 ```text
 http://localhost:3100
+```
+
+## Menambah Project Next.js
+
+Next.js menggunakan Node.js lokal di komputer pengguna, bukan Docker GABLER. Pastikan Node.js sudah terinstall terlebih dahulu.
+
+Cek instalasi Node.js:
+
+```powershell
+node --version
+npm --version
+npx --version
+```
+
+Cara paling mudah di Windows adalah menjalankan:
+
+```text
+scripts\create-next.bat
+```
+
+Linux/macOS:
+
+```bash
+./scripts/create-next.sh
+```
+
+Script akan meminta:
+
+- nama app Next.js
+- port yang akan dipakai, default `3000`
+
+Contoh:
+
+```text
+Masukkan nama app Next.js: web-next
+Masukkan port Next.js [3000]: 3200
+```
+
+Script akan membuat project di:
+
+```text
+www\web-next
+```
+
+Script juga akan:
+
+- membuat `package-lock.json`
+- membuat folder `node_modules`
+- mengatur `package.json` agar `npm run dev` memakai port pilihan
+
+Menjalankan Next.js:
+
+```powershell
+cd c:\etc\www\web-next
+npm run dev
+```
+
+Linux/macOS:
+
+```bash
+cd /path/to/gabler/www/web-next
+npm run dev
+```
+
+Akses:
+
+```text
+http://localhost:3200
+```
+
+## Menambah Project Nuxt
+
+Nuxt menggunakan Node.js lokal di komputer pengguna, bukan Docker GABLER. Pastikan Node.js sudah terinstall terlebih dahulu.
+
+Cek instalasi Node.js:
+
+```powershell
+node --version
+npm --version
+npx --version
+```
+
+Cara paling mudah di Windows adalah menjalankan:
+
+```text
+scripts\create-nuxt.bat
+```
+
+Linux/macOS:
+
+```bash
+./scripts/create-nuxt.sh
+```
+
+Script akan meminta:
+
+- nama app Nuxt
+- port yang akan dipakai, default `3000`
+
+Contoh:
+
+```text
+Masukkan nama app Nuxt: web-nuxt
+Masukkan port Nuxt [3000]: 3300
+```
+
+Script akan membuat project di:
+
+```text
+www\web-nuxt
+```
+
+Script juga akan:
+
+- menjalankan `npm install --package-lock`
+- membuat `package-lock.json`
+- membuat folder `node_modules`
+- mengatur `package.json` agar `npm run dev` memakai port pilihan
+
+Menjalankan Nuxt:
+
+```powershell
+cd c:\etc\www\web-nuxt
+npm run dev
+```
+
+Linux/macOS:
+
+```bash
+cd /path/to/gabler/www/web-nuxt
+npm run dev
+```
+
+Akses:
+
+```text
+http://localhost:3300
 ```
 
 ## Menggunakan Composer
