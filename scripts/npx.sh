@@ -1,6 +1,13 @@
 #!/usr/bin/env sh
 set -eu
 
+case "$(uname -s 2>/dev/null || true)" in
+  MINGW*|MSYS*|CYGWIN*)
+    echo "Gunakan scripts\\npx.bat di Windows. File .sh hanya untuk Linux/macOS."
+    exit 1
+    ;;
+esac
+
 ROOT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
 CURRENT_DIR="$(pwd)"
 

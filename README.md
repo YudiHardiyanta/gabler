@@ -542,6 +542,8 @@ chmod +x scripts/*.sh
 chmod +x www/*.sh
 ```
 
+Di Windows gunakan file `.bat`. Jangan jalankan file `.sh` lewat Git Bash/MSYS/Cygwin karena path Docker Windows dapat terbaca salah.
+
 Shortcut dari dalam folder `www`:
 
 Windows:
