@@ -28,12 +28,26 @@ c:\etc
 |   +-- stop-gabler.sh
 |   +-- composer.bat
 |   +-- composer.sh
+|   +-- npm.bat
+|   +-- npm.sh
+|   +-- npx.bat
+|   +-- npx.sh
 |   +-- create-laravel.bat
 |   +-- create-laravel.sh
 |   +-- create-yii.bat
 |   +-- create-yii.sh
 |   +-- create-ci.bat
 |   +-- create-ci.sh
+|   +-- create-vue.bat
+|   +-- create-vue.sh
+|   +-- create-react.bat
+|   +-- create-react.sh
+|   +-- create-nuxt.bat
+|   +-- create-nuxt.sh
+|   +-- create-next.bat
+|   +-- create-next.sh
+|   +-- create-express.bat
+|   +-- create-express.sh
 +-- mysql-data\
 +-- mongodb-data\
 +-- redis-data\
@@ -499,6 +513,174 @@ database.default.password = apppass
 database.default.DBDriver = MySQLi
 database.default.port = 3306
 ```
+
+## Menambah Project Node.js
+
+Node.js tidak perlu diinstall di komputer lokal. GABLER menyediakan wrapper `npm` dan `npx` memakai Docker image `node:lts-alpine`.
+
+Project Node.js disimpan di folder `www\nama-app`. Saat menjalankan dev server, wrapper sudah membuka port umum:
+
+```text
+3000: Next.js, Nuxt, Express
+5173: Vite, Vue, React
+5174: Vite alternatif
+```
+
+Sebelum menjalankan script di Linux/macOS, pastikan file `.sh` executable:
+
+```bash
+chmod +x scripts/*.sh
+```
+
+### Vue
+
+Windows:
+
+```text
+scripts\create-vue.bat
+```
+
+Linux/macOS:
+
+```bash
+./scripts/create-vue.sh
+```
+
+Menjalankan dev server:
+
+```powershell
+cd c:\etc\www\vue-app
+..\..\scripts\npm.bat run dev -- --host 0.0.0.0
+```
+
+Linux/macOS:
+
+```bash
+cd /path/to/gabler/www/vue-app
+../../scripts/npm.sh run dev -- --host 0.0.0.0
+```
+
+Akses: `http://localhost:5173`
+
+### React
+
+Windows:
+
+```text
+scripts\create-react.bat
+```
+
+Linux/macOS:
+
+```bash
+./scripts/create-react.sh
+```
+
+Menjalankan dev server:
+
+```powershell
+cd c:\etc\www\react-app
+..\..\scripts\npm.bat run dev -- --host 0.0.0.0
+```
+
+Linux/macOS:
+
+```bash
+cd /path/to/gabler/www/react-app
+../../scripts/npm.sh run dev -- --host 0.0.0.0
+```
+
+Akses: `http://localhost:5173`
+
+### Nuxt
+
+Windows:
+
+```text
+scripts\create-nuxt.bat
+```
+
+Linux/macOS:
+
+```bash
+./scripts/create-nuxt.sh
+```
+
+Menjalankan dev server:
+
+```powershell
+cd c:\etc\www\nuxt-app
+..\..\scripts\npm.bat run dev -- --host 0.0.0.0
+```
+
+Linux/macOS:
+
+```bash
+cd /path/to/gabler/www/nuxt-app
+../../scripts/npm.sh run dev -- --host 0.0.0.0
+```
+
+Akses: `http://localhost:3000`
+
+### Next.js
+
+Windows:
+
+```text
+scripts\create-next.bat
+```
+
+Linux/macOS:
+
+```bash
+./scripts/create-next.sh
+```
+
+Menjalankan dev server:
+
+```powershell
+cd c:\etc\www\next-app
+..\..\scripts\npm.bat run dev -- --hostname 0.0.0.0
+```
+
+Linux/macOS:
+
+```bash
+cd /path/to/gabler/www/next-app
+../../scripts/npm.sh run dev -- --hostname 0.0.0.0
+```
+
+Akses: `http://localhost:3000`
+
+### Express
+
+Windows:
+
+```text
+scripts\create-express.bat
+```
+
+Linux/macOS:
+
+```bash
+./scripts/create-express.sh
+```
+
+Menjalankan server:
+
+```powershell
+cd c:\etc\www\express-app
+..\..\scripts\npm.bat start
+```
+
+Linux/macOS:
+
+```bash
+cd /path/to/gabler/www/express-app
+../../scripts/npm.sh start
+```
+
+Akses: `http://localhost:3000`
 
 ## Menggunakan Composer
 
