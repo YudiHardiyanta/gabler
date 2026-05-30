@@ -25,9 +25,9 @@ if [ -e "www/$APP_NAME" ]; then
   exit 1
 fi
 
-docker run --rm -it -v "$ROOT_DIR/www:/app" -w /app node:lts-alpine sh -lc "npx express-generator@latest '$APP_NAME' --no-view && cd '$APP_NAME' && npm install"
+docker run --rm -v "$ROOT_DIR/www:/app" -w /app node:lts-alpine sh -lc "npx express-generator@latest '$APP_NAME' --no-view && cd '$APP_NAME' && npm install"
 
 echo
 echo "Express app berhasil dibuat."
 echo "Folder: www/$APP_NAME"
-echo "Jalankan: cd www/$APP_NAME lalu ../../scripts/npm.sh start"
+echo "Jalankan: cd www/$APP_NAME lalu ../npm.sh start"

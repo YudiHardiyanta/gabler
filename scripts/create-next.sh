@@ -25,9 +25,9 @@ if [ -e "www/$APP_NAME" ]; then
   exit 1
 fi
 
-docker run --rm -it -v "$ROOT_DIR/www:/app" -w /app node:lts-alpine sh -lc "npx create-next-app@latest '$APP_NAME' --yes --use-npm"
+docker run --rm -v "$ROOT_DIR/www:/app" -w /app node:lts-alpine sh -lc "npx create-next-app@latest '$APP_NAME' --yes --use-npm"
 
 echo
 echo "Next.js app berhasil dibuat."
 echo "Folder: www/$APP_NAME"
-echo "Jalankan: cd www/$APP_NAME lalu ../../scripts/npm.sh run dev -- --hostname 0.0.0.0"
+echo "Jalankan: cd www/$APP_NAME lalu ../npm.sh run dev -- --hostname 0.0.0.0"

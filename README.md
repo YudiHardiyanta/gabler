@@ -28,6 +28,8 @@ c:\etc
 |   +-- stop-gabler.sh
 |   +-- composer.bat
 |   +-- composer.sh
+|   +-- node.bat
+|   +-- node.sh
 |   +-- npm.bat
 |   +-- npm.sh
 |   +-- npx.bat
@@ -56,6 +58,13 @@ c:\etc
 +-- php\
 |   +-- Dockerfile
 +-- www\
+    +-- composer.bat
+    +-- node.bat
+    +-- node.sh
+    +-- npm.bat
+    +-- npm.sh
+    +-- npx.bat
+    +-- npx.sh
     +-- index.php
 ```
 
@@ -63,6 +72,7 @@ Keterangan:
 
 - `www/index.php` adalah halaman utama.
 - `www` adalah tempat menyimpan project PHP.
+- `www/node`, `www/npm`, dan `www/npx` adalah shortcut agar command Node.js bisa dipanggil dari folder project di dalam `www`.
 - `mysql-data` menyimpan data MySQL lokal.
 - `mongodb-data` menyimpan data MongoDB lokal.
 - `redis-data` menyimpan data Redis lokal.
@@ -516,20 +526,40 @@ database.default.port = 3306
 
 ## Menambah Project Node.js
 
-Node.js tidak perlu diinstall di komputer lokal. GABLER menyediakan wrapper `npm` dan `npx` memakai Docker image `node:lts-alpine`.
+Node.js tidak perlu diinstall di komputer lokal. GABLER menyediakan wrapper `node`, `npm`, dan `npx` memakai Docker image `node:lts-alpine`.
 
 Project Node.js disimpan di folder `www\nama-app`. Saat menjalankan dev server, wrapper sudah membuka port umum:
 
 ```text
 3000: Next.js, Nuxt, Express
 5173: Vite, Vue, React
-5174: Vite alternatif
 ```
 
 Sebelum menjalankan script di Linux/macOS, pastikan file `.sh` executable:
 
 ```bash
 chmod +x scripts/*.sh
+chmod +x www/*.sh
+```
+
+Shortcut dari dalam folder `www`:
+
+Windows:
+
+```powershell
+cd c:\etc\www\nama-project
+..\node.bat --version
+..\npm.bat --version
+..\npx.bat --version
+```
+
+Linux/macOS:
+
+```bash
+cd /path/to/gabler/www/nama-project
+../node.sh --version
+../npm.sh --version
+../npx.sh --version
 ```
 
 ### Vue
@@ -550,14 +580,14 @@ Menjalankan dev server:
 
 ```powershell
 cd c:\etc\www\vue-app
-..\..\scripts\npm.bat run dev -- --host 0.0.0.0
+..\npm.bat run dev -- --host 0.0.0.0
 ```
 
 Linux/macOS:
 
 ```bash
 cd /path/to/gabler/www/vue-app
-../../scripts/npm.sh run dev -- --host 0.0.0.0
+../npm.sh run dev -- --host 0.0.0.0
 ```
 
 Akses: `http://localhost:5173`
@@ -580,14 +610,14 @@ Menjalankan dev server:
 
 ```powershell
 cd c:\etc\www\react-app
-..\..\scripts\npm.bat run dev -- --host 0.0.0.0
+..\npm.bat run dev -- --host 0.0.0.0
 ```
 
 Linux/macOS:
 
 ```bash
 cd /path/to/gabler/www/react-app
-../../scripts/npm.sh run dev -- --host 0.0.0.0
+../npm.sh run dev -- --host 0.0.0.0
 ```
 
 Akses: `http://localhost:5173`
@@ -610,14 +640,14 @@ Menjalankan dev server:
 
 ```powershell
 cd c:\etc\www\nuxt-app
-..\..\scripts\npm.bat run dev -- --host 0.0.0.0
+..\npm.bat run dev -- --host 0.0.0.0
 ```
 
 Linux/macOS:
 
 ```bash
 cd /path/to/gabler/www/nuxt-app
-../../scripts/npm.sh run dev -- --host 0.0.0.0
+../npm.sh run dev -- --host 0.0.0.0
 ```
 
 Akses: `http://localhost:3000`
@@ -640,14 +670,14 @@ Menjalankan dev server:
 
 ```powershell
 cd c:\etc\www\next-app
-..\..\scripts\npm.bat run dev -- --hostname 0.0.0.0
+..\npm.bat run dev -- --hostname 0.0.0.0
 ```
 
 Linux/macOS:
 
 ```bash
 cd /path/to/gabler/www/next-app
-../../scripts/npm.sh run dev -- --hostname 0.0.0.0
+../npm.sh run dev -- --hostname 0.0.0.0
 ```
 
 Akses: `http://localhost:3000`
@@ -670,14 +700,14 @@ Menjalankan server:
 
 ```powershell
 cd c:\etc\www\express-app
-..\..\scripts\npm.bat start
+..\npm.bat start
 ```
 
 Linux/macOS:
 
 ```bash
 cd /path/to/gabler/www/express-app
-../../scripts/npm.sh start
+../npm.sh start
 ```
 
 Akses: `http://localhost:3000`

@@ -24,13 +24,13 @@ if exist "www\%APP_NAME%" (
     exit /b 1
 )
 
-docker run --rm -it -v "%CD%\www:/app" -w /app node:lts-alpine sh -lc "npx create-next-app@latest '%APP_NAME%' --yes --use-npm"
+docker run --rm -v "%CD%\www:/app" -w /app node:lts-alpine sh -lc "npx create-next-app@latest '%APP_NAME%' --yes --use-npm"
 if errorlevel 1 goto error
 
 echo.
 echo Next.js app berhasil dibuat.
 echo Folder: www\%APP_NAME%
-echo Jalankan: cd www\%APP_NAME% lalu ..\..\scripts\npm.bat run dev -- --hostname 0.0.0.0
+echo Jalankan: cd www\%APP_NAME% lalu ..\npm.bat run dev -- --hostname 0.0.0.0
 echo.
 pause
 exit /b 0

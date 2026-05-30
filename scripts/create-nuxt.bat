@@ -24,13 +24,13 @@ if exist "www\%APP_NAME%" (
     exit /b 1
 )
 
-docker run --rm -it -v "%CD%\www:/app" -w /app node:lts-alpine sh -lc "npx nuxi@latest init '%APP_NAME%' --packageManager npm && cd '%APP_NAME%' && npm install"
+docker run --rm -v "%CD%\www:/app" -w /app node:lts-alpine sh -lc "npx nuxi@latest init '%APP_NAME%' --packageManager npm && cd '%APP_NAME%' && npm install"
 if errorlevel 1 goto error
 
 echo.
 echo Nuxt app berhasil dibuat.
 echo Folder: www\%APP_NAME%
-echo Jalankan: cd www\%APP_NAME% lalu ..\..\scripts\npm.bat run dev -- --host 0.0.0.0
+echo Jalankan: cd www\%APP_NAME% lalu ..\npm.bat run dev -- --host 0.0.0.0
 echo.
 pause
 exit /b 0

@@ -14,5 +14,10 @@ case "$CURRENT_DIR" in
 esac
 
 PROJECT_DIR="${CURRENT_DIR#"$ROOT_DIR"/www/}"
+PORT_ARGS="-p 3000:3000 -p 5173:5173"
 
-docker run --rm -it -p 3000:3000 -p 5173:5173 -p 5174:5174 -v "$ROOT_DIR/www:/app" -w "/app/$PROJECT_DIR" node:lts-alpine npx "$@"
+case "${1:-}" in
+  --version|-v) PORT_ARGS="" ;;
+esac
+
+docker run --rm $PORT_ARGS -v "$ROOT_DIR/www:/app" -w "/app/$PROJECT_DIR" node:lts-alpine npx "$@"

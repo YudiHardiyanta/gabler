@@ -13,5 +13,10 @@ if /I "%PROJECT_DIR%"=="%CURRENT_DIR%" (
 )
 
 set "PROJECT_DIR=%PROJECT_DIR:\=/%"
+set "PORT_ARGS=-p 3000:3000 -p 5173:5173"
 
-docker run --rm -it -p 3000:3000 -p 5173:5173 -p 5174:5174 -v "%ROOT_DIR%www:/app" -w "/app/%PROJECT_DIR%" node:lts-alpine npm %*
+if "%~1"=="--version" set "PORT_ARGS="
+if "%~1"=="-v" set "PORT_ARGS="
+if "%~1"=="version" set "PORT_ARGS="
+
+docker run --rm %PORT_ARGS% -v "%ROOT_DIR%www:/app" -w "/app/%PROJECT_DIR%" node:lts-alpine npm %*

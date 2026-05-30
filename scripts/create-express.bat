@@ -24,13 +24,13 @@ if exist "www\%APP_NAME%" (
     exit /b 1
 )
 
-docker run --rm -it -v "%CD%\www:/app" -w /app node:lts-alpine sh -lc "npx express-generator@latest '%APP_NAME%' --no-view && cd '%APP_NAME%' && npm install"
+docker run --rm -v "%CD%\www:/app" -w /app node:lts-alpine sh -lc "npx express-generator@latest '%APP_NAME%' --no-view && cd '%APP_NAME%' && npm install"
 if errorlevel 1 goto error
 
 echo.
 echo Express app berhasil dibuat.
 echo Folder: www\%APP_NAME%
-echo Jalankan: cd www\%APP_NAME% lalu ..\..\scripts\npm.bat start
+echo Jalankan: cd www\%APP_NAME% lalu ..\npm.bat start
 echo.
 pause
 exit /b 0
