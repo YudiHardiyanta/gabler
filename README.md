@@ -21,6 +21,17 @@ GABLER adalah template environment lokal berbasis Docker untuk menjalankan proje
 c:\etc
 +-- docker-compose.yml
 +-- README.md
++-- scripts\
+|   +-- start-gabler.bat
+|   +-- start-gabler.sh
+|   +-- composer.bat
+|   +-- composer.sh
+|   +-- create-laravel.bat
+|   +-- create-laravel.sh
+|   +-- create-yii.bat
+|   +-- create-yii.sh
+|   +-- create-ci.bat
+|   +-- create-ci.sh
 +-- mysql-data\
 +-- mongodb-data\
 +-- redis-data\
@@ -41,6 +52,7 @@ Keterangan:
 - `redis-data` menyimpan data Redis lokal.
 - `nginx/default.conf` adalah konfigurasi Nginx.
 - `php/Dockerfile` adalah image PHP custom dengan ekstensi MySQL, MongoDB, dan Redis.
+- `scripts` berisi script helper untuk Windows, Linux, dan macOS.
 
 ## Install Docker
 
@@ -59,10 +71,19 @@ docker compose version
 
 ## Cara Paling Mudah
 
-Setelah Docker terinstall dan berjalan, di Windows jalankan file:
+Setelah Docker terinstall dan berjalan, jalankan script sesuai sistem operasi.
+
+Windows:
 
 ```text
-start-gabler.bat
+scripts\start-gabler.bat
+```
+
+Linux/macOS:
+
+```bash
+chmod +x scripts/*.sh
+./scripts/start-gabler.sh
 ```
 
 File ini akan menjalankan:
@@ -290,7 +311,13 @@ Laravel tidak disertakan sebagai project bawaan agar repository tetap ringan dan
 Cara paling mudah di Windows adalah menjalankan:
 
 ```text
-create-laravel.bat
+scripts\create-laravel.bat
+```
+
+Linux/macOS:
+
+```bash
+./scripts/create-laravel.sh
 ```
 
 Script akan meminta nama app Laravel, lalu otomatis:
@@ -355,7 +382,13 @@ docker compose exec php sh -lc "cd /var/www/html/nama-project && chmod -R 777 st
 Cara paling mudah di Windows adalah menjalankan:
 
 ```text
-create-yii.bat
+scripts\create-yii.bat
+```
+
+Linux/macOS:
+
+```bash
+./scripts/create-yii.sh
 ```
 
 Script akan meminta nama app Yii2, lalu otomatis:
@@ -399,7 +432,13 @@ Setelah itu edit `www\yii-app\config\db.php` agar memakai:
 Cara paling mudah di Windows adalah menjalankan:
 
 ```text
-create-ci.bat
+scripts\create-ci.bat
+```
+
+Linux/macOS:
+
+```bash
+./scripts/create-ci.sh
 ```
 
 Script akan meminta nama app CodeIgniter, lalu otomatis:
@@ -447,7 +486,7 @@ database.default.port = 3306
 
 ## Menggunakan Composer
 
-GABLER menyediakan wrapper `composer.bat`, sehingga pengguna tidak perlu mengetik command Docker yang panjang.
+GABLER menyediakan wrapper Composer di folder `scripts`, sehingga pengguna tidak perlu mengetik command Docker yang panjang.
 
 Jika ingin menjalankan Composer di dalam project, masuk ke folder project terlebih dahulu:
 
@@ -458,16 +497,31 @@ cd c:\etc\www\nama-project
 Lalu jalankan Composer seperti biasa:
 
 ```powershell
-..\composer.bat install
-..\composer.bat require vendor/package
-..\composer.bat update
+..\..\scripts\composer.bat install
+..\..\scripts\composer.bat require vendor/package
+..\..\scripts\composer.bat update
+```
+
+Linux/macOS:
+
+```bash
+../../scripts/composer.sh install
+../../scripts/composer.sh require vendor/package
+../../scripts/composer.sh update
 ```
 
 Contoh install package Laravel:
 
 ```powershell
 cd c:\etc\www\toko-online
-..\composer.bat require laravel/breeze
+..\..\scripts\composer.bat require laravel/breeze
+```
+
+Contoh install package Laravel di Linux/macOS:
+
+```bash
+cd /path/to/gabler/www/toko-online
+../../scripts/composer.sh require laravel/breeze
 ```
 
 Wrapper tersebut akan menjalankan Composer lewat container Docker:
