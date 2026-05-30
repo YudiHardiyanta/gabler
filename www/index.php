@@ -100,7 +100,7 @@ if (!extension_loaded('redis')) {
     <main class="flex min-h-screen items-center justify-center px-6 py-10">
         <section class="w-full max-w-5xl text-center">
             <div class="mb-6 inline-flex items-center rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-200">
-                Local PHP Development Stack
+                Local Development Stack
             </div>
 
             <h1 class="text-5xl font-bold tracking-tight text-white sm:text-6xl">GABLER</h1>
