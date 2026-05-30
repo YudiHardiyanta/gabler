@@ -34,6 +34,8 @@ c:\etc
 |   +-- create-yii.sh
 |   +-- create-ci.bat
 |   +-- create-ci.sh
+|   +-- create-express.bat
+|   +-- create-express.sh
 +-- mysql-data\
 +-- mongodb-data\
 +-- redis-data\
@@ -499,6 +501,74 @@ database.default.username = appuser
 database.default.password = apppass
 database.default.DBDriver = MySQLi
 database.default.port = 3306
+```
+
+## Menambah Project Express
+
+Express menggunakan Node.js lokal di komputer pengguna, bukan Docker GABLER. Pastikan Node.js sudah terinstall terlebih dahulu.
+
+Cek instalasi Node.js:
+
+```powershell
+node --version
+npm --version
+npx --version
+```
+
+Jika command di atas belum tersedia, install Node.js dari:
+
+```text
+https://nodejs.org/
+```
+
+Cara paling mudah di Windows adalah menjalankan:
+
+```text
+scripts\create-express.bat
+```
+
+Linux/macOS:
+
+```bash
+./scripts/create-express.sh
+```
+
+Script akan meminta:
+
+- nama app Express
+- port yang akan dipakai, default `3000`
+
+Contoh:
+
+```text
+Masukkan nama app Express: api-app
+Masukkan port Express [3000]: 3100
+```
+
+Script akan membuat project di:
+
+```text
+www\api-app
+```
+
+Menjalankan Express:
+
+```powershell
+cd c:\etc\www\api-app
+npm start
+```
+
+Linux/macOS:
+
+```bash
+cd /path/to/gabler/www/api-app
+npm start
+```
+
+Akses:
+
+```text
+http://localhost:3100
 ```
 
 ## Menggunakan Composer
