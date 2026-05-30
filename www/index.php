@@ -7,9 +7,6 @@ $mongoDb = 'appdb';
 $mongoUri = 'mongodb://root:rootpass@mongodb:27017/?authSource=admin';
 $redisHost = 'redis';
 $redisPort = 6379;
-$nodeImage = 'node:lts-alpine';
-$nodeVersion = 'v24.16.0';
-$nodeStatus = 'Docker ' . $nodeImage . ' / Node.js ' . $nodeVersion;
 $appVersion = '1.3.0';
 $year = date('Y');
 $mongoCollections = [];
@@ -93,12 +90,12 @@ if (!extension_loaded('redis')) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>GABLER - Node.js and PHP</title>
+    <title>GABLER</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen bg-slate-950 text-slate-100">
     <main class="flex min-h-screen items-center justify-center px-6 py-10">
-        <section class="w-full max-w-5xl text-center">
+        <section class="w-full max-w-4xl text-center">
             <div class="mb-6 inline-flex items-center rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-200">
                 Local Development Stack
             </div>
@@ -106,18 +103,14 @@ if (!extension_loaded('redis')) {
             <h1 class="text-5xl font-bold tracking-tight text-white sm:text-6xl">GABLER</h1>
             <p class="mt-4 text-lg font-semibold text-cyan-100">General App Backend Local Environment Runner</p>
             <p class="mx-auto mt-4 max-w-xl text-base leading-7 text-slate-300">
-                Environment lokal untuk PHP, Node.js, Nginx, MySQL, MongoDB, Redis, phpMyAdmin, mongo-express, dan Redis Commander.
+                Environment lokal untuk PHP, Nginx, MySQL, MongoDB, Redis, phpMyAdmin, mongo-express, dan Redis Commander.
                 Edit file web di folder <code class="rounded bg-white/10 px-1.5 py-0.5 text-cyan-100">www</code>.
             </p>
 
-            <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+            <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 <div class="rounded-lg border border-white/10 bg-white/5 p-4">
                     <p class="text-sm text-slate-400">PHP version</p>
                     <p class="mt-1 text-lg font-semibold text-white"><?= htmlspecialchars(PHP_VERSION, ENT_QUOTES, 'UTF-8') ?></p>
-                </div>
-                <div class="rounded-lg border border-white/10 bg-white/5 p-4">
-                    <p class="text-sm text-slate-400">Node.js</p>
-                    <p class="mt-1 text-base font-semibold text-white"><?= htmlspecialchars($nodeStatus, ENT_QUOTES, 'UTF-8') ?></p>
                 </div>
                 <div class="rounded-lg border border-white/10 bg-white/5 p-4">
                     <p class="text-sm text-slate-400">Database</p>

@@ -28,28 +28,12 @@ c:\etc
 |   +-- stop-gabler.sh
 |   +-- composer.bat
 |   +-- composer.sh
-|   +-- node.bat
-|   +-- node.sh
-|   +-- npm.bat
-|   +-- npm.sh
-|   +-- npx.bat
-|   +-- npx.sh
 |   +-- create-laravel.bat
 |   +-- create-laravel.sh
 |   +-- create-yii.bat
 |   +-- create-yii.sh
 |   +-- create-ci.bat
 |   +-- create-ci.sh
-|   +-- create-vue.bat
-|   +-- create-vue.sh
-|   +-- create-react.bat
-|   +-- create-react.sh
-|   +-- create-nuxt.bat
-|   +-- create-nuxt.sh
-|   +-- create-next.bat
-|   +-- create-next.sh
-|   +-- create-express.bat
-|   +-- create-express.sh
 +-- mysql-data\
 +-- mongodb-data\
 +-- redis-data\
@@ -59,12 +43,6 @@ c:\etc
 |   +-- Dockerfile
 +-- www\
     +-- composer.bat
-    +-- node.bat
-    +-- node.sh
-    +-- npm.bat
-    +-- npm.sh
-    +-- npx.bat
-    +-- npx.sh
     +-- index.php
 ```
 
@@ -72,7 +50,6 @@ Keterangan:
 
 - `www/index.php` adalah halaman utama.
 - `www` adalah tempat menyimpan project PHP.
-- `www/node`, `www/npm`, dan `www/npx` adalah shortcut agar command Node.js bisa dipanggil dari folder project di dalam `www`.
 - `mysql-data` menyimpan data MySQL lokal.
 - `mongodb-data` menyimpan data MongoDB lokal.
 - `redis-data` menyimpan data Redis lokal.
@@ -523,196 +500,6 @@ database.default.password = apppass
 database.default.DBDriver = MySQLi
 database.default.port = 3306
 ```
-
-## Menambah Project Node.js
-
-Node.js tidak perlu diinstall di komputer lokal. GABLER menyediakan wrapper `node`, `npm`, dan `npx` memakai Docker image `node:lts-alpine`.
-
-Project Node.js disimpan di folder `www\nama-app`. Saat menjalankan dev server, wrapper sudah membuka port umum:
-
-```text
-3000: Next.js, Nuxt, Express
-5173: Vite, Vue, React
-```
-
-Sebelum menjalankan script di Linux/macOS, pastikan file `.sh` executable:
-
-```bash
-chmod +x scripts/*.sh
-chmod +x www/*.sh
-```
-
-Di Windows gunakan file `.bat`. Jangan jalankan file `.sh` lewat Git Bash/MSYS/Cygwin karena path Docker Windows dapat terbaca salah.
-
-Shortcut dari dalam folder `www`:
-
-Windows:
-
-```powershell
-cd c:\etc\www\nama-project
-..\node.bat --version
-..\npm.bat --version
-..\npx.bat --version
-```
-
-Linux/macOS:
-
-```bash
-cd /path/to/gabler/www/nama-project
-../node.sh --version
-../npm.sh --version
-../npx.sh --version
-```
-
-### Vue
-
-Windows:
-
-```text
-scripts\create-vue.bat
-```
-
-Linux/macOS:
-
-```bash
-./scripts/create-vue.sh
-```
-
-Menjalankan dev server:
-
-```powershell
-cd c:\etc\www\vue-app
-..\npm.bat run dev -- --host 0.0.0.0
-```
-
-Linux/macOS:
-
-```bash
-cd /path/to/gabler/www/vue-app
-../npm.sh run dev -- --host 0.0.0.0
-```
-
-Akses: `http://localhost:5173`
-
-### React
-
-Windows:
-
-```text
-scripts\create-react.bat
-```
-
-Linux/macOS:
-
-```bash
-./scripts/create-react.sh
-```
-
-Menjalankan dev server:
-
-```powershell
-cd c:\etc\www\react-app
-..\npm.bat run dev -- --host 0.0.0.0
-```
-
-Linux/macOS:
-
-```bash
-cd /path/to/gabler/www/react-app
-../npm.sh run dev -- --host 0.0.0.0
-```
-
-Akses: `http://localhost:5173`
-
-### Nuxt
-
-Windows:
-
-```text
-scripts\create-nuxt.bat
-```
-
-Linux/macOS:
-
-```bash
-./scripts/create-nuxt.sh
-```
-
-Menjalankan dev server:
-
-```powershell
-cd c:\etc\www\nuxt-app
-..\npm.bat run dev -- --host 0.0.0.0
-```
-
-Linux/macOS:
-
-```bash
-cd /path/to/gabler/www/nuxt-app
-../npm.sh run dev -- --host 0.0.0.0
-```
-
-Akses: `http://localhost:3000`
-
-### Next.js
-
-Windows:
-
-```text
-scripts\create-next.bat
-```
-
-Linux/macOS:
-
-```bash
-./scripts/create-next.sh
-```
-
-Menjalankan dev server:
-
-```powershell
-cd c:\etc\www\next-app
-..\npm.bat run dev -- --hostname 0.0.0.0
-```
-
-Linux/macOS:
-
-```bash
-cd /path/to/gabler/www/next-app
-../npm.sh run dev -- --hostname 0.0.0.0
-```
-
-Akses: `http://localhost:3000`
-
-### Express
-
-Windows:
-
-```text
-scripts\create-express.bat
-```
-
-Linux/macOS:
-
-```bash
-./scripts/create-express.sh
-```
-
-Menjalankan server:
-
-```powershell
-cd c:\etc\www\express-app
-..\npm.bat start
-```
-
-Linux/macOS:
-
-```bash
-cd /path/to/gabler/www/express-app
-../npm.sh start
-```
-
-Akses: `http://localhost:3000`
 
 ## Menggunakan Composer
 
