@@ -2,7 +2,7 @@
 
 **GABLER** adalah singkatan dari **General App Backend Local Environment Runner**.
 
-GABLER adalah template environment lokal berbasis Docker untuk menjalankan project backend PHP dengan Nginx, MySQL, MongoDB, phpMyAdmin, dan mongo-express. Project web dapat dibuat sendiri di folder `www`.
+GABLER adalah template environment lokal berbasis Docker untuk menjalankan project backend PHP dengan Nginx, MySQL, MongoDB, Redis, phpMyAdmin, mongo-express, dan Redis Commander. Project web dapat dibuat sendiri di folder `www`.
 
 ## Isi Stack
 
@@ -12,6 +12,8 @@ GABLER adalah template environment lokal berbasis Docker untuk menjalankan proje
 - phpMyAdmin: database manager di `http://localhost:8081`
 - MongoDB: database dokumen di port `27017`
 - mongo-express: MongoDB web manager di `http://localhost:8082`
+- Redis: cache, session, dan queue di port `6379`
+- Redis Commander: Redis web manager di `http://localhost:8083`
 
 ## Struktur Folder
 
@@ -21,6 +23,7 @@ c:\etc
 +-- README.md
 +-- mysql-data\
 +-- mongodb-data\
++-- redis-data\
 +-- nginx\
 |   +-- default.conf
 +-- php\
@@ -35,8 +38,9 @@ Keterangan:
 - `www` adalah tempat menyimpan project PHP.
 - `mysql-data` menyimpan data MySQL lokal.
 - `mongodb-data` menyimpan data MongoDB lokal.
+- `redis-data` menyimpan data Redis lokal.
 - `nginx/default.conf` adalah konfigurasi Nginx.
-- `php/Dockerfile` adalah image PHP custom dengan ekstensi MySQL dan MongoDB.
+- `php/Dockerfile` adalah image PHP custom dengan ekstensi MySQL, MongoDB, dan Redis.
 
 ## Install Docker
 
@@ -72,6 +76,7 @@ Setelah selesai, buka:
 - Halaman utama: `http://localhost:8080`
 - phpMyAdmin: `http://localhost:8081`
 - mongo-express: `http://localhost:8082`
+- Redis Commander: `http://localhost:8083`
 
 ## Menjalankan Stack
 
@@ -98,6 +103,7 @@ docker compose ps
 - Halaman utama: `http://localhost:8080`
 - phpMyAdmin: `http://localhost:8081`
 - mongo-express: `http://localhost:8082`
+- Redis Commander: `http://localhost:8083`
 
 ## Database MySQL
 
@@ -153,6 +159,36 @@ Password: adminpass
 
 Halaman utama GABLER juga menampilkan daftar collection MongoDB di database `appdb` dan menyediakan form sederhana untuk membuat collection baru.
 
+## Database Redis
+
+Credential Redis:
+
+```text
+Host dari container PHP: redis
+Host dari komputer lokal: localhost
+Port: 6379
+Password: kosong
+```
+
+Redis Commander:
+
+```text
+URL: http://localhost:8083
+```
+
+Contoh konfigurasi Laravel `.env`:
+
+```env
+CACHE_STORE=redis
+SESSION_DRIVER=redis
+QUEUE_CONNECTION=redis
+REDIS_HOST=redis
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+```
+
+Halaman utama GABLER juga menampilkan status koneksi Redis dari container PHP.
+
 ## Command Harian
 
 Menyalakan service:
@@ -190,6 +226,8 @@ docker compose restart mysql
 docker compose restart phpmyadmin
 docker compose restart mongodb
 docker compose restart mongo-express
+docker compose restart redis
+docker compose restart redis-commander
 ```
 
 Masuk ke container PHP:
@@ -208,6 +246,12 @@ Masuk ke MongoDB:
 
 ```powershell
 docker compose exec mongodb mongosh -u root -p rootpass --authenticationDatabase admin
+```
+
+Masuk ke Redis:
+
+```powershell
+docker compose exec redis redis-cli
 ```
 
 Mematikan container tanpa menghapus data:

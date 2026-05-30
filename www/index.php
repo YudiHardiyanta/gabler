@@ -5,7 +5,9 @@ $user = 'appuser';
 $pass = 'apppass';
 $mongoDb = 'appdb';
 $mongoUri = 'mongodb://root:rootpass@mongodb:27017/?authSource=admin';
-$appVersion = '1.1.0';
+$redisHost = 'redis';
+$redisPort = 6379;
+$appVersion = '1.2.0';
 $year = date('Y');
 $mongoCollections = [];
 $mongoMessage = null;
@@ -66,6 +68,22 @@ if (!extension_loaded('mongodb')) {
         $mongoReady = false;
     }
 }
+
+if (!extension_loaded('redis')) {
+    $redisStatus = 'Redis extension not installed';
+    $redisReady = false;
+} else {
+    try {
+        $redis = new Redis();
+        $redis->connect($redisHost, $redisPort, 1.5);
+        $redisStatus = $redis->ping() ? 'Redis connected' : 'Redis not ready';
+        $redisReady = $redisStatus === 'Redis connected';
+        $redis->close();
+    } catch (Throwable $e) {
+        $redisStatus = 'Redis not ready: ' . $e->getMessage();
+        $redisReady = false;
+    }
+}
 ?>
 <!doctype html>
 <html lang="id">
@@ -85,11 +103,11 @@ if (!extension_loaded('mongodb')) {
             <h1 class="text-5xl font-bold tracking-tight text-white sm:text-6xl">GABLER</h1>
             <p class="mt-4 text-lg font-semibold text-cyan-100">General App Backend Local Environment Runner</p>
             <p class="mx-auto mt-4 max-w-xl text-base leading-7 text-slate-300">
-                Environment lokal untuk PHP, Nginx, MySQL, MongoDB, phpMyAdmin, dan mongo-express.
+                Environment lokal untuk PHP, Nginx, MySQL, MongoDB, Redis, phpMyAdmin, mongo-express, dan Redis Commander.
                 Edit file web di folder <code class="rounded bg-white/10 px-1.5 py-0.5 text-cyan-100">www</code>.
             </p>
 
-            <div class="mt-8 grid gap-3 md:grid-cols-3">
+            <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 <div class="rounded-lg border border-white/10 bg-white/5 p-4">
                     <p class="text-sm text-slate-400">PHP version</p>
                     <p class="mt-1 text-lg font-semibold text-white"><?= htmlspecialchars(PHP_VERSION, ENT_QUOTES, 'UTF-8') ?></p>
@@ -106,6 +124,12 @@ if (!extension_loaded('mongodb')) {
                         <?= htmlspecialchars($mongoStatus, ENT_QUOTES, 'UTF-8') ?>
                     </p>
                 </div>
+                <div class="rounded-lg border border-white/10 bg-white/5 p-4">
+                    <p class="text-sm text-slate-400">Redis</p>
+                    <p class="mt-1 text-lg font-semibold <?= $redisReady ? 'text-emerald-300' : 'text-rose-300' ?>">
+                        <?= htmlspecialchars($redisStatus, ENT_QUOTES, 'UTF-8') ?>
+                    </p>
+                </div>
             </div>
 
             <div class="mt-8 flex flex-wrap justify-center gap-3">
@@ -114,6 +138,9 @@ if (!extension_loaded('mongodb')) {
                 </a>
                 <a class="inline-flex items-center justify-center rounded-md bg-emerald-400 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-emerald-300" href="http://localhost:8082">
                     Buka mongo-express
+                </a>
+                <a class="inline-flex items-center justify-center rounded-md bg-amber-300 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-amber-200" href="http://localhost:8083">
+                    Buka Redis Commander
                 </a>
             </div>
 

@@ -59,6 +59,22 @@ services:
       start_period: 30s
     restart: unless-stopped
 
+  redis:
+    image: redis:latest
+    container_name: xampp-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis-data:/data
+    command: ["redis-server", "--appendonly", "yes"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    restart: unless-stopped
+
   phpmyadmin:
     image: phpmyadmin:latest
     container_name: xampp-phpmyadmin
@@ -88,5 +104,17 @@ services:
       ME_CONFIG_BASICAUTH_PASSWORD: adminpass
     depends_on:
       mongodb:
+        condition: service_healthy
+    restart: unless-stopped
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: xampp-redis-commander
+    ports:
+      - "8083:8081"
+    environment:
+      REDIS_HOSTS: local:redis:6379
+    depends_on:
+      redis:
         condition: service_healthy
     restart: unless-stopped

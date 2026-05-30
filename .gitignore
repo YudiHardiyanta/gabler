@@ -1,6 +1,7 @@
 # Database data
 /mysql-data/
 /mongodb-data/
+/redis-data/
 
 # Local backup files
 /backup/
