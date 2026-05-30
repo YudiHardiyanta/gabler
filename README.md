@@ -772,7 +772,7 @@ Script juga akan:
 - menjalankan `npm install --package-lock`
 - membuat `package-lock.json`
 - membuat folder `node_modules`
-- mengatur `package.json` agar `npm run dev` memakai port pilihan
+- mengatur `package.json` agar `npm run dev` memakai port pilihan dengan `--strictPort`
 
 Menjalankan React:
 
@@ -842,7 +842,7 @@ Script juga akan:
 - menjalankan `npm install --package-lock`
 - membuat `package-lock.json`
 - membuat folder `node_modules`
-- mengatur `package.json` agar `npm run dev` memakai port pilihan
+- mengatur `package.json` agar `npm run dev` memakai port pilihan dengan `--strictPort`
 
 Menjalankan Vue:
 

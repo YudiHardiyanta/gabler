@@ -72,7 +72,10 @@ cd "$ROOT_DIR"
 
 echo
 echo "Mengatur script dev/preview ke port $APP_PORT..."
-node -e "const fs=require('fs'); const p='www/$APP_NAME/package.json'; const pkg=JSON.parse(fs.readFileSync(p,'utf8')); pkg.scripts=pkg.scripts||{}; pkg.scripts.dev='vite --host 0.0.0.0 --port $APP_PORT'; pkg.scripts.preview='vite preview --host 0.0.0.0 --port $APP_PORT'; fs.writeFileSync(p, JSON.stringify(pkg,null,2)+'\n');"
+cd "www/$APP_NAME"
+npm pkg set scripts.dev="vite --host 0.0.0.0 --port $APP_PORT --strictPort"
+npm pkg set scripts.preview="vite preview --host 0.0.0.0 --port $APP_PORT --strictPort"
+cd "$ROOT_DIR"
 
 echo
 echo "React app berhasil dibuat."
