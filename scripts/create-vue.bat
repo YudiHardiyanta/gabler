@@ -60,8 +60,13 @@ if errorlevel 1 (
 
 echo.
 echo Membuat project Vue: %APP_NAME%
-call npm create vue@latest "www\%APP_NAME%" -- --default
-if errorlevel 1 goto error
+pushd "www"
+call npm create vue@latest "%APP_NAME%" -- --default
+if errorlevel 1 (
+    popd
+    goto error
+)
+popd
 
 echo.
 echo Install dependency dan membuat package-lock.json...

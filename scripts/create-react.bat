@@ -60,8 +60,13 @@ if errorlevel 1 (
 
 echo.
 echo Membuat project React: %APP_NAME%
-call npm create vite@latest "www\%APP_NAME%" -- --template react
-if errorlevel 1 goto error
+pushd "www"
+call npm create vite@latest "%APP_NAME%" -- --template react
+if errorlevel 1 (
+    popd
+    goto error
+)
+popd
 
 echo.
 echo Install dependency dan membuat package-lock.json...
