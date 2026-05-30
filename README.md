@@ -40,6 +40,10 @@ c:\etc
 |   +-- create-next.sh
 |   +-- create-nuxt.bat
 |   +-- create-nuxt.sh
+|   +-- create-react.bat
+|   +-- create-react.sh
+|   +-- create-vue.bat
+|   +-- create-vue.sh
 +-- mysql-data\
 +-- mongodb-data\
 +-- redis-data\
@@ -718,6 +722,146 @@ Akses:
 
 ```text
 http://localhost:3300
+```
+
+## Menambah Project React
+
+React menggunakan Node.js lokal di komputer pengguna, bukan Docker GABLER. Pastikan Node.js sudah terinstall terlebih dahulu.
+
+Cek instalasi Node.js:
+
+```powershell
+node --version
+npm --version
+npx --version
+```
+
+Cara paling mudah di Windows adalah menjalankan:
+
+```text
+scripts\create-react.bat
+```
+
+Linux/macOS:
+
+```bash
+./scripts/create-react.sh
+```
+
+Script akan meminta:
+
+- nama app React
+- port yang akan dipakai, default `5173`
+
+Contoh:
+
+```text
+Masukkan nama app React: web-react
+Masukkan port React [5173]: 5174
+```
+
+Script akan membuat project di:
+
+```text
+www\web-react
+```
+
+Script juga akan:
+
+- menjalankan `npm create vite@latest` dengan template React
+- menjalankan `npm install --package-lock`
+- membuat `package-lock.json`
+- membuat folder `node_modules`
+- mengatur `package.json` agar `npm run dev` memakai port pilihan
+
+Menjalankan React:
+
+```powershell
+cd c:\etc\www\web-react
+npm run dev
+```
+
+Linux/macOS:
+
+```bash
+cd /path/to/gabler/www/web-react
+npm run dev
+```
+
+Akses:
+
+```text
+http://localhost:5174
+```
+
+## Menambah Project Vue
+
+Vue menggunakan Node.js lokal di komputer pengguna, bukan Docker GABLER. Pastikan Node.js sudah terinstall terlebih dahulu.
+
+Cek instalasi Node.js:
+
+```powershell
+node --version
+npm --version
+npx --version
+```
+
+Cara paling mudah di Windows adalah menjalankan:
+
+```text
+scripts\create-vue.bat
+```
+
+Linux/macOS:
+
+```bash
+./scripts/create-vue.sh
+```
+
+Script akan meminta:
+
+- nama app Vue
+- port yang akan dipakai, default `5173`
+
+Contoh:
+
+```text
+Masukkan nama app Vue: web-vue
+Masukkan port Vue [5173]: 5175
+```
+
+Script akan membuat project di:
+
+```text
+www\web-vue
+```
+
+Script juga akan:
+
+- menjalankan `npm create vue@latest`
+- menjalankan `npm install --package-lock`
+- membuat `package-lock.json`
+- membuat folder `node_modules`
+- mengatur `package.json` agar `npm run dev` memakai port pilihan
+
+Menjalankan Vue:
+
+```powershell
+cd c:\etc\www\web-vue
+npm run dev
+```
+
+Linux/macOS:
+
+```bash
+cd /path/to/gabler/www/web-vue
+npm run dev
+```
+
+Akses:
+
+```text
+http://localhost:5175
 ```
 
 ## Menggunakan Composer
