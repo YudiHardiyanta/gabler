@@ -44,22 +44,6 @@ if [ -e "www/$APP_NAME" ]; then
   exit 1
 fi
 
-printf "Masukkan port React [5173]: "
-read -r APP_PORT
-APP_PORT="${APP_PORT:-5173}"
-
-case "$APP_PORT" in
-  ''|*[!0-9]*)
-    echo "Port harus angka 1 sampai 65535."
-    exit 1
-    ;;
-esac
-
-if [ "$APP_PORT" -lt 1 ] || [ "$APP_PORT" -gt 65535 ]; then
-  echo "Port harus angka 1 sampai 65535."
-  exit 1
-fi
-
 echo
 echo "Membuat project React: $APP_NAME"
 npm create vite@latest "www/$APP_NAME" -- --template react
@@ -71,20 +55,13 @@ npm install --package-lock
 cd "$ROOT_DIR"
 
 echo
-echo "Mengatur script dev/preview ke port $APP_PORT..."
-cd "www/$APP_NAME"
-npm pkg set scripts.dev="vite --host 0.0.0.0 --port $APP_PORT --strictPort"
-npm pkg set scripts.preview="vite preview --host 0.0.0.0 --port $APP_PORT --strictPort"
-cd "$ROOT_DIR"
-
-echo
 echo "React app berhasil dibuat."
 echo "Folder: www/$APP_NAME"
-echo "Port: $APP_PORT"
+echo "Port default: 5173"
 echo "File dibuat: package-lock.json"
 echo "Folder dibuat: node_modules"
 echo "Jalankan:"
 echo "  cd www/$APP_NAME"
 echo "  npm run dev"
 echo "Akses:"
-echo "  http://localhost:$APP_PORT"
+echo "  http://localhost:5173"

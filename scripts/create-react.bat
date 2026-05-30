@@ -48,16 +48,6 @@ if exist "www\%APP_NAME%" (
     exit /b 1
 )
 
-set /p "APP_PORT=Masukkan port React [5173]: "
-if "%APP_PORT%"=="" set "APP_PORT=5173"
-
-powershell -NoProfile -ExecutionPolicy Bypass -Command "if ('%APP_PORT%' -notmatch '^[0-9]+$' -or [int]'%APP_PORT%' -lt 1 -or [int]'%APP_PORT%' -gt 65535) { exit 1 }"
-if errorlevel 1 (
-    echo Port harus angka 1 sampai 65535.
-    pause
-    exit /b 1
-)
-
 echo.
 echo Membuat project React: %APP_NAME%
 pushd "www"
@@ -79,31 +69,16 @@ if errorlevel 1 (
 popd
 
 echo.
-echo Mengatur script dev/preview ke port %APP_PORT%...
-pushd "www\%APP_NAME%"
-call npm pkg set scripts.dev="vite --host 0.0.0.0 --port %APP_PORT% --strictPort"
-if errorlevel 1 (
-    popd
-    goto error
-)
-call npm pkg set scripts.preview="vite preview --host 0.0.0.0 --port %APP_PORT% --strictPort"
-if errorlevel 1 (
-    popd
-    goto error
-)
-popd
-
-echo.
 echo React app berhasil dibuat.
 echo Folder: www\%APP_NAME%
-echo Port: %APP_PORT%
+echo Port default: 5173
 echo File dibuat: package-lock.json
 echo Folder dibuat: node_modules
 echo Jalankan:
 echo   cd www\%APP_NAME%
 echo   npm run dev
 echo Akses:
-echo   http://localhost:%APP_PORT%
+echo   http://localhost:5173
 echo.
 pause
 exit /b 0

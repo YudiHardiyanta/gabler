@@ -48,16 +48,6 @@ if exist "www\%APP_NAME%" (
     exit /b 1
 )
 
-set /p "APP_PORT=Masukkan port Express [3000]: "
-if "%APP_PORT%"=="" set "APP_PORT=3000"
-
-powershell -NoProfile -ExecutionPolicy Bypass -Command "if ('%APP_PORT%' -notmatch '^[0-9]+$' -or [int]'%APP_PORT%' -lt 1 -or [int]'%APP_PORT%' -gt 65535) { exit 1 }"
-if errorlevel 1 (
-    echo Port harus angka 1 sampai 65535.
-    pause
-    exit /b 1
-)
-
 echo.
 echo Membuat project Express: %APP_NAME%
 call npx express-generator@latest "www\%APP_NAME%" --no-view
@@ -73,26 +63,21 @@ if errorlevel 1 (
 )
 popd
 
-echo.
-echo Mengatur port default ke %APP_PORT%...
-call node -e "const fs=require('fs'); const p='www/%APP_NAME%/bin/www'; let c=fs.readFileSync(p,'utf8'); c=c.replace(/process\.env\.PORT \|\| '3000'/, `process.env.PORT || '%APP_PORT%'`); fs.writeFileSync(p,c);"
-if errorlevel 1 goto error
-
 echo Menambahkan informasi port di app.js...
-call node -e "const fs=require('fs'); const p='www/%APP_NAME%/app.js'; let c=fs.readFileSync(p,'utf8'); const insert=`var app = express();\n\nvar defaultPort = process.env.PORT || '%APP_PORT%';\napp.set('port', defaultPort);\nconsole.log('Express app default port: ' + defaultPort);`; c=c.replace('var app = express();', insert); fs.writeFileSync(p,c);"
+call node -e "const fs=require('fs'); const p='www/%APP_NAME%/app.js'; let c=fs.readFileSync(p,'utf8'); const insert=`var app = express();\n\nvar defaultPort = process.env.PORT || '3000';\napp.set('port', defaultPort);\nconsole.log('Express app default port: ' + defaultPort);`; c=c.replace('var app = express();', insert); fs.writeFileSync(p,c);"
 if errorlevel 1 goto error
 
 echo.
 echo Express app berhasil dibuat.
 echo Folder: www\%APP_NAME%
-echo Port: %APP_PORT%
+echo Port default: 3000
 echo File dibuat: package-lock.json
 echo Folder dibuat: node_modules
 echo Jalankan:
 echo   cd www\%APP_NAME%
 echo   npm start
 echo Akses:
-echo   http://localhost:%APP_PORT%
+echo   http://localhost:3000
 echo.
 pause
 exit /b 0

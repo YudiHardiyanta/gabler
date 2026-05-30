@@ -48,37 +48,22 @@ if exist "www\%APP_NAME%" (
     exit /b 1
 )
 
-set /p "APP_PORT=Masukkan port Next.js [3000]: "
-if "%APP_PORT%"=="" set "APP_PORT=3000"
-
-powershell -NoProfile -ExecutionPolicy Bypass -Command "if ('%APP_PORT%' -notmatch '^[0-9]+$' -or [int]'%APP_PORT%' -lt 1 -or [int]'%APP_PORT%' -gt 65535) { exit 1 }"
-if errorlevel 1 (
-    echo Port harus angka 1 sampai 65535.
-    pause
-    exit /b 1
-)
-
 echo.
 echo Membuat project Next.js: %APP_NAME%
 call npx create-next-app@latest "www\%APP_NAME%" --yes --use-npm
 if errorlevel 1 goto error
 
 echo.
-echo Mengatur script dev/start ke port %APP_PORT%...
-call node -e "const fs=require('fs'); const p='www/%APP_NAME%/package.json'; const pkg=JSON.parse(fs.readFileSync(p,'utf8')); pkg.scripts=pkg.scripts||{}; pkg.scripts.dev='next dev -p %APP_PORT%'; pkg.scripts.start='next start -p %APP_PORT%'; fs.writeFileSync(p, JSON.stringify(pkg,null,2)+'\n');"
-if errorlevel 1 goto error
-
-echo.
 echo Next.js app berhasil dibuat.
 echo Folder: www\%APP_NAME%
-echo Port: %APP_PORT%
+echo Port default: 3000
 echo File dibuat: package-lock.json
 echo Folder dibuat: node_modules
 echo Jalankan:
 echo   cd www\%APP_NAME%
 echo   npm run dev
 echo Akses:
-echo   http://localhost:%APP_PORT%
+echo   http://localhost:3000
 echo.
 pause
 exit /b 0

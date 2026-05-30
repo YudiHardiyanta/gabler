@@ -544,21 +544,18 @@ Linux/macOS:
 Script akan meminta:
 
 - nama app Express
-- port yang akan dipakai, default `3000`
 
 Script juga akan:
 
 - menjalankan `npm install --package-lock`
 - membuat `package-lock.json`
 - membuat folder `node_modules`
-- mengatur default port di `bin/www`
 - menambahkan log port di `app.js`
 
 Contoh:
 
 ```text
 Masukkan nama app Express: api-app
-Masukkan port Express [3000]: 3100
 ```
 
 Script akan membuat project di:
@@ -584,7 +581,21 @@ npm start
 Akses:
 
 ```text
-http://localhost:3100
+http://localhost:3000
+```
+
+Jika ingin memakai port lain, jalankan dengan environment variable:
+
+Windows:
+
+```powershell
+$env:PORT=3100; npm start
+```
+
+Linux/macOS:
+
+```bash
+PORT=3100 npm start
 ```
 
 ## Menambah Project Next.js
@@ -614,13 +625,11 @@ Linux/macOS:
 Script akan meminta:
 
 - nama app Next.js
-- port yang akan dipakai, default `3000`
 
 Contoh:
 
 ```text
 Masukkan nama app Next.js: web-next
-Masukkan port Next.js [3000]: 3200
 ```
 
 Script akan membuat project di:
@@ -633,7 +642,6 @@ Script juga akan:
 
 - membuat `package-lock.json`
 - membuat folder `node_modules`
-- mengatur `package.json` agar `npm run dev` memakai port pilihan
 
 Menjalankan Next.js:
 
@@ -652,7 +660,19 @@ npm run dev
 Akses:
 
 ```text
-http://localhost:3200
+http://localhost:3000
+```
+
+Jika ingin memakai port lain:
+
+```powershell
+npm run dev -- -p 3200
+```
+
+Linux/macOS:
+
+```bash
+npm run dev -- -p 3200
 ```
 
 ## Menambah Project Nuxt
@@ -682,13 +702,11 @@ Linux/macOS:
 Script akan meminta:
 
 - nama app Nuxt
-- port yang akan dipakai, default `3000`
 
 Contoh:
 
 ```text
 Masukkan nama app Nuxt: web-nuxt
-Masukkan port Nuxt [3000]: 3300
 ```
 
 Script akan membuat project di:
@@ -702,7 +720,6 @@ Script juga akan:
 - menjalankan `npm install --package-lock`
 - membuat `package-lock.json`
 - membuat folder `node_modules`
-- mengatur `package.json` agar `npm run dev` memakai port pilihan
 
 Menjalankan Nuxt:
 
@@ -721,7 +738,19 @@ npm run dev
 Akses:
 
 ```text
-http://localhost:3300
+http://localhost:3000
+```
+
+Jika ingin memakai port lain:
+
+```powershell
+npm run dev -- --port 3300
+```
+
+Linux/macOS:
+
+```bash
+npm run dev -- --port 3300
 ```
 
 ## Menambah Project React
@@ -751,13 +780,11 @@ Linux/macOS:
 Script akan meminta:
 
 - nama app React
-- port yang akan dipakai, default `5173`
 
 Contoh:
 
 ```text
 Masukkan nama app React: web-react
-Masukkan port React [5173]: 5174
 ```
 
 Script akan membuat project di:
@@ -772,7 +799,6 @@ Script juga akan:
 - menjalankan `npm install --package-lock`
 - membuat `package-lock.json`
 - membuat folder `node_modules`
-- mengatur `package.json` agar `npm run dev` memakai port pilihan dengan `--strictPort`
 
 Menjalankan React:
 
@@ -791,7 +817,19 @@ npm run dev
 Akses:
 
 ```text
-http://localhost:5174
+http://localhost:5173
+```
+
+Jika ingin memakai port lain:
+
+```powershell
+npm run dev -- --port 5174
+```
+
+Linux/macOS:
+
+```bash
+npm run dev -- --port 5174
 ```
 
 ## Menambah Project Vue
@@ -821,13 +859,11 @@ Linux/macOS:
 Script akan meminta:
 
 - nama app Vue
-- port yang akan dipakai, default `5173`
 
 Contoh:
 
 ```text
 Masukkan nama app Vue: web-vue
-Masukkan port Vue [5173]: 5175
 ```
 
 Script akan membuat project di:
@@ -842,7 +878,6 @@ Script juga akan:
 - menjalankan `npm install --package-lock`
 - membuat `package-lock.json`
 - membuat folder `node_modules`
-- mengatur `package.json` agar `npm run dev` memakai port pilihan dengan `--strictPort`
 
 Menjalankan Vue:
 
@@ -861,7 +896,19 @@ npm run dev
 Akses:
 
 ```text
-http://localhost:5175
+http://localhost:5173
+```
+
+Jika ingin memakai port lain:
+
+```powershell
+npm run dev -- --port 5175
+```
+
+Linux/macOS:
+
+```bash
+npm run dev -- --port 5175
 ```
 
 ## Menggunakan Composer
